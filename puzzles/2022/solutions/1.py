@@ -6,5 +6,8 @@ __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ---- START OF SOLUTION -----
 
-print("1:", ...)
-print("2:", ...)
+elfs = [sum(map(int, elf.split("\n"))) for elf in data.strip().split("\n\n")]
+elfs.sort(reverse=True)
+
+print("1:", elfs[0])
+print("2:", sum(elfs[:3]))
