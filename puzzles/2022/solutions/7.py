@@ -99,7 +99,6 @@ def find_dir_to_delete_for_update(tree: NodeDir, disk_size: int, update_size: in
 
     assert missing_space > 0, "puzzle doesn't mention case with no missing space"
 
-    # find the smallest dir that is bigger than missing_space
     return min(n.size for n, _ in tree.walk() if n.size > missing_space)
 
 
