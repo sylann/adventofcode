@@ -5,7 +5,7 @@ import typing as t
 data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
-# ---- START OF SOLUTION -----
+# ----- START OF SOLUTION -----
 
 priorities = {
     **{chr(ord('a') + x): x + 1 for x in range(0, 26)},

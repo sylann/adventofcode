@@ -6,7 +6,7 @@ import typing as t
 data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
-# ---- START OF SOLUTION -----
+# ----- START OF SOLUTION -----
 
 
 class Shape(enum.IntEnum):
