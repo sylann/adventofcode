@@ -30,6 +30,30 @@ executable script file (as opposed to files that need to be compiled first).
 
 - Happy coding! 🎉
 
+
+## Logging
+
+By default, stderr will not appear in the console when running a puzzle solution.
+Even if enabled, there is an arbitrary limit to the number of stderr lines that
+will be printed.
+
+This is to avoid flooding the terminal when running a puzzle with user specific
+input that tends to be large.
+
+It is possible to go against this default behaviour, here are some examples:
+
+```sh
+# Enable printing of errors and logging messages
+./aoc.py 2022 1 -d
+./aoc.py 2022 1 --debug
+# Also increase the maximum number of debug lines to 1000
+./aoc.py 2022 1 -d --max-debug-lines 1000
+```
+
+> **NOTE**: Stderr is intercepted by the `aoc.py` script but there is currently
+> no attempt to limit the performance impact of printing to stderr in puzzle
+> solutions.
+
 ## Project structure
 
 Organization of files related to working on a puzzle
