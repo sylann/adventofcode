@@ -64,7 +64,7 @@ def decode_meaning(line: str) -> DecodedLine:
     return left, right, outcome
 
 
-def get_final_score(data: str, interpret: FInterpretLine):
+def get_final_score(data: str, interpret: FInterpretLine) -> int:
     total = 0
 
     for line in data.strip().split("\n"):

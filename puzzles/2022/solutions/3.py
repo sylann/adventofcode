@@ -13,21 +13,21 @@ priorities = {
 }
 
 
-def iter_common_in_rs_halves(data: str):
+def iter_common_in_rs_halves(data: str) -> t.Generator[set[str], None, None]:
     for rucksack in data.strip().split("\n"):
         half_size = len(rucksack) // 2
         c1, c2 = rucksack[:half_size], rucksack[half_size:]
 
         yield set(c1) & set(c2)
 
-def iter_common_in_3_rs(data: str):
+def iter_common_in_3_rs(data: str) -> t.Generator[set[str], None, None]:
     rucksacks = data.strip().split("\n")
 
     for i in range(0, len(rucksacks), 3):
         yield set(rucksacks[i]) & set(rucksacks[i + 1]) & set(rucksacks[i + 2])
 
 
-def count_priority(it: t.Iterator[set[str]]):
+def count_priority(it: t.Iterator[set[str]]) -> int:
     commons = []
 
     for common in it:

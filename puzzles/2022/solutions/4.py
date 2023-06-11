@@ -19,7 +19,7 @@ class Range(t.NamedTuple):
         return not (self.start > other.end or other.start > self.end)
 
 
-def count_needed_reviews(data: str, not_ok: t.Callable[[Range, Range], bool]):
+def count_needed_reviews(data: str, not_ok: t.Callable[[Range, Range], bool]) -> int:
     total = 0
     for line in data.strip().split("\n"):
         a1, a2 = line.split(",")

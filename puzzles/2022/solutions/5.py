@@ -55,7 +55,7 @@ class Crane9001(Crane9000):
         stacks[d] += moved
 
 
-def operate(data: str, Crane: type[Crane9000]):
+def operate(data: str, Crane: type[Crane9000]) -> str:
     stacks_str, procs_str = data.rstrip("\n").split("\n\n")
 
     cargo = Cargo(stacks_str)
