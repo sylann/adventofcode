@@ -48,7 +48,14 @@ The example file must have been created first. This is not done automatically.
 """
 
 p.add_argument("-d", "--debug", action="store_true").help = """\
-Enable printing stderr to the console.
+Enable printing of stderr to the console, but limit the number of lines to an
+arbitrary small number to prevent flooding.
+"""
+
+p.add_argument("--max-debug-lines", type=int, default=100).help = """\
+Override the maximum number of stderr lines to print to the console.
+
+For example, use a higher number to prevent truncating if necessary for debugging.
 """
 
 p.add_argument("-l", "--lang", default="py").help = """\
@@ -67,6 +74,7 @@ class Args(argparse.Namespace):
     lang: str
     example: bool
     debug: bool
+    max_debug_lines: int
 
 
 args = p.parse_args(namespace=Args())
@@ -116,11 +124,31 @@ executable = code_file
 
 
 with open(input_file, mode="rt") as stdin:
-    print("")
-    print("----- Program output starts now -----")
-    stdout=sys.stdout
-    stderr=sys.stderr if args.debug else subprocess.DEVNULL
+    stdout=subprocess.PIPE
+    stderr=subprocess.PIPE if args.debug else subprocess.DEVNULL
 
     p = subprocess.run([executable], stdin=stdin, stdout=stdout, stderr=stderr, text=True)
-    if p.returncode > 0:
-        exit(p.returncode)
+
+    if args.debug:
+        sys.stderr.write("\n")
+        sys.stderr.write("----- Program's stderr -----\n")
+
+        excess_lines = p.stderr.count("\n") - args.max_debug_lines
+        if excess_lines > 0:
+            truncate_msg = [
+                "-----",
+                f"Content was too long, {excess_lines} lines were truncated.",
+                "Use --max-debug-lines to control how many lines can be displayed.",
+                "-----",
+            ]
+            lines = p.stderr.split("\n")
+            n = args.max_debug_lines // 2
+            sys.stderr.write("\n".join(lines[:n] + truncate_msg + lines[-n:]))
+        else:
+            sys.stderr.write(p.stderr)
+
+    sys.stdout.write("\n")
+    sys.stdout.write("----- Program's stdout -----\n")
+    sys.stdout.write(p.stdout)
+
+    exit(p.returncode)
