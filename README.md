@@ -10,7 +10,7 @@ executable script file (as opposed to files that need to be compiled first).
 
 ## Get started
 
-- Have python installed (I think 3.7 at least, maybe 3.9)
+- Have python installed (3.10 at least)
 
 - Setup authentication
   (This lets you download your input files from https://adventofcode.com)

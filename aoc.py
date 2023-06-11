@@ -41,10 +41,16 @@ p.add_argument("day", type=int).help="""\
 The day (or id) of the puzzle. e.g. "1", "2".
 """
 
-p.add_argument("-e", "--example", action="store_true").help = """\
+p.add_argument("-e", "--example", nargs="?", default=False, const=True).help = """\
 Execute the script with the example input from the website's puzzle description
 instead of the one that is specific to the user.
 The example file must have been created first. This is not done automatically.
+
+Optionally give the suffix of an alternate example file to use instead of the
+default one. Alternate example files must always have a path identical to the
+default example but with a suffixed stem. e.g. `path/to/examples/1a.txt`.
+This makes organisation consistent and cli use easy.
+For example run "./aoc.py 2022 6 -ea" to use puzzles/2022/examples/6a.txt
 """
 
 p.add_argument("-d", "--debug", action="store_true").help = """\
@@ -72,7 +78,7 @@ class Args(argparse.Namespace):
     year: int
     day: int
     lang: str
-    example: bool
+    example: bool | str
     debug: bool
     max_debug_lines: int
 
@@ -80,7 +86,9 @@ class Args(argparse.Namespace):
 args = p.parse_args(namespace=Args())
 
 
-input_file_example = Path("puzzles") / f"{args.year}" / "examples" / f"{args.day}.txt"
+example_stem = f"{args.day}{args.example}" if isinstance(args.example, str) else args.day
+
+input_file_example = Path("puzzles") / f"{args.year}" / "examples" / f"{example_stem}.txt"
 input_file_user    = Path("puzzles") / f"{args.year}" / "inputs" / f"{args.day}.txt"
 code_file          = Path("puzzles") / f"{args.year}" / "solutions" / f"{args.day}.{args.lang}"
 template_file      = Path("templates") / f".{args.lang}"
