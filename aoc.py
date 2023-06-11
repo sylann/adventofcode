@@ -83,9 +83,11 @@ args = p.parse_args(namespace=Args())
 input_file_example = Path("puzzles") / f"{args.year}" / "examples" / f"{args.day}.txt"
 input_file_user    = Path("puzzles") / f"{args.year}" / "inputs" / f"{args.day}.txt"
 code_file          = Path("puzzles") / f"{args.year}" / "solutions" / f"{args.day}.{args.lang}"
+description_file   = Path("puzzles") / f"{args.year}" / "descriptions" / f"{args.day}.html"
 template_file      = Path("templates") / f".{args.lang}"
 
-aoc_url = f"https://adventofcode.com/{args.year}/day/{args.day}/input"
+aoc_url = f"https://adventofcode.com/{args.year}/day/{args.day}"
+aoc_data_url = f"https://adventofcode.com/{args.year}/day/{args.day}/input"
 aoc_cookie = Path(".cookie").read_text()
 
 input_file = input_file_example if args.example else input_file_user
@@ -95,9 +97,9 @@ print(f"[INFO] code_file: {code_file}")
 
 
 if not args.example and not input_file_user.exists():
-    print(f"[INFO] Retrieving input from {aoc_url}")
+    print(f"[INFO] Retrieving input from {aoc_data_url}")
 
-    req = urllib.request.Request(aoc_url, method="GET")
+    req = urllib.request.Request(aoc_data_url, method="GET")
     req.add_header("Cookie", aoc_cookie)
 
     with urllib.request.urlopen(req) as res:
@@ -117,6 +119,32 @@ if not code_file.exists():
     code_file.parent.mkdir(parents=True, exist_ok=True)
     code_file.write_text(content)
     code_file.chmod(code_file.stat().st_mode | stat.S_IXUSR)  # chmod u+x
+
+
+if not description_file.exists():
+    print(f"[INFO] Retrieving description from {aoc_url}")
+
+    req = urllib.request.Request(aoc_url, method="GET")
+    req.add_header("Cookie", aoc_cookie)
+
+    with urllib.request.urlopen(req) as res:
+        page_html = res.read().decode()
+
+    print(f"[INFO] Writing description file")
+
+    # Making a lot of assumptions here but the page structure is easy and allows it
+    tag_beg, tag_end = '<article class="day-desc">', '</article>'
+    extract, beg, end, eof = "", 0, 0, len(page_html) - 1
+    while True:
+        try:
+            beg = page_html.index(tag_beg, end)
+            end = page_html.index(tag_end, beg) + len(tag_end)
+        except ValueError:
+            break
+        extract += page_html[beg:end] + "\n"
+
+    description_file.parent.mkdir(parents=True, exist_ok=True)
+    description_file.write_text(extract)
 
 
 # TODO: handle compilation for rust files
