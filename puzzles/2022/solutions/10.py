@@ -33,5 +33,21 @@ def sum_signal_strengths(program: str) -> int:
 
     return strength
 
+
+def print_crt(program: str) -> str:
+    pixels = []
+    for cycle, reg_x in enumerate(iter_cpu_cycles(program), start=0):
+        reg_x_index = cycle % 40
+        sprite_visible = reg_x - 1 <= reg_x_index <= reg_x + 1
+        pixel = "#" if sprite_visible else "."
+        pixels.append(pixel)
+
+    line_width = 40
+    return "\n".join(
+        "".join(pixels[line_start: line_start + line_width])
+        for line_start in range(0, len(pixels), line_width)
+    )
+
+
 print("1:", sum_signal_strengths(data))
-print("2:", ...)
+print("2:", print_crt(data), sep="\n")
