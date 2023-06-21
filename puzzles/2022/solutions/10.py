@@ -7,22 +7,31 @@ __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 # ----- START OF SOLUTION -----
 
 
-def sum_signal_strengths(program: str) -> int:
-    cycles = [0]  # add 0 to simulate 1-based index
+def iter_cpu_cycles(program: str):
     reg_x = 1
 
     for line in program.strip("\n").split("\n"):
         match line.split():
             case ["addx", v]:
-                cycles.append(reg_x)
-                cycles.append(reg_x)
+                yield reg_x
+                yield reg_x
                 reg_x += int(v)
             case ["noop"]:
-                cycles.append(reg_x)
+                yield reg_x
 
-    cycles_to_measure = (20, 60, 100, 140, 180, 220)
-    return sum(cycles[i] * i for i in cycles_to_measure)
 
+def sum_signal_strengths(program: str) -> int:
+    cycles_to_measure = iter((20, 60, 100, 140, 180, 220))
+    to_measure = next(cycles_to_measure)
+    strength = 0
+
+    for cycle, reg_x in enumerate(iter_cpu_cycles(program), start=1):
+        if cycle == to_measure:
+            strength += cycle * reg_x
+            if not (to_measure := next(cycles_to_measure, None)):
+                break
+
+    return strength
 
 print("1:", sum_signal_strengths(data))
 print("2:", ...)
