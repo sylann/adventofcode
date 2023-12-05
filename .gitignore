@@ -3,3 +3,4 @@
 /debug/
 /puzzles/*/inputs/
 /.cookie
+*.log
