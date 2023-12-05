@@ -94,7 +94,7 @@ code_file          = Path("puzzles") / f"{args.year}" / "solutions" / f"{args.da
 template_file      = Path("templates") / f".{args.lang}"
 
 aoc_url = f"https://adventofcode.com/{args.year}/day/{args.day}/input"
-aoc_cookie = Path(".cookie").read_text()
+aoc_cookie = Path(".cookie").read_text().strip()
 
 input_file = input_file_example if args.example else input_file_user
 
