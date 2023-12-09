@@ -59,21 +59,29 @@ It is possible to go against this default behaviour, here are some examples:
 Organization of files related to working on a puzzle
 
 ```
-  ├── puzzles
-  │   └── <year>
-  │       ├── examples
-  │       │   └── <n>.txt      Must be created manually
+  ├── inputs
+  │   └── year_<year>
   │       │
-  │       ├── inputs           (Not tracked by git)
-  │       │   └── <n>.txt      Automatically downloaded from website
+  │       │    Example files must be created manually.
   │       │
-  │       └── solutions
-  │           └── <n>.<ext>    Automatically created (uses template if available)
+  │       ├── day_<0n>_example.txt         Default example name
+  │       ├── day_<0n>_example_1.txt       Default for part 1 (Uses base default if missing)
+  │       ├── day_<0n>_example_2.txt       Default for part 2 (Uses base default if missing)
+  │       ├── day_<0n>_example_<id>.txt    Additional example names can be used from the CLI
+  │       │
+  │       │    User specific input files are downloaded from the website. They are not tracked in GIT
+  │       │    because it seems to be a well established convention to not share them.
+  │       │
+  │       └── day_<0n>.txt
   │
-  ├── templates
-  │   └── .<ext>    May be written to speedup initialization of a puzzle
+  ├── <language>
+  │   └── year_<year>
+  │       │
+  │       ├── template.<ext>    May be written to speedup initialization of a puzzle
+  │       │
+  │       └── day_<0n>.<ext>    Automatically created, using the language's template if available
   │
-  ├── .cookie       (Not tracked by git)
+  ├── .cookie       (Not tracked in git)
   │
   └── aoc.py        Entry point
 ```

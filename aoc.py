@@ -6,6 +6,11 @@ import sys
 import urllib.request
 from pathlib import Path
 
+
+directory_by_lang = {
+    "py": "python",
+}
+
 DESCRIPTION = """\
 Shortcut script to prepare and run a solution to a puzzle of https://adventofcode.com.
 
@@ -48,9 +53,10 @@ The example file must have been created first. This is not done automatically.
 
 Optionally give the suffix of an alternate example file to use instead of the
 default one. Alternate example files must always have a path identical to the
-default example but with a suffixed stem. e.g. `path/to/examples/1a.txt`.
+default example with a suffix. e.g. `inputs/year_2022/day_06_example_<suffix>`.
 This makes organisation consistent and cli use easy.
-For example run "./aoc.py 2022 6 -ea" to use puzzles/2022/examples/6a.txt
+For example execute `./aoc.py 2022 6 -e hello` in your terminal to execute
+`python/year_2022/day_06.py` with `inputs/year_2022/day_06_example_hello.txt`.
 """
 
 p.add_argument("-d", "--debug", action="store_true").help = """\
@@ -64,7 +70,7 @@ Override the maximum number of stderr lines to print to the console.
 For example, use a higher number to prevent truncating if necessary for debugging.
 """
 
-p.add_argument("-l", "--lang", default="py").help = """\
+p.add_argument("-l", "--lang", default="py", choices=directory_by_lang).help = """\
 The extension of the file to generate. Default to "py".
 
 Use this to choose a specific programming language to solve the puzzle.
@@ -86,12 +92,13 @@ class Args(argparse.Namespace):
 args = p.parse_args(namespace=Args())
 
 
-example_stem = f"{args.day}{args.example}" if isinstance(args.example, str) else args.day
+directory = directory_by_lang[args.lang]
+ex_id = "_example" + (f"_{args.example}" if isinstance(args.example, str) else "")
 
-input_file_example = Path("puzzles") / f"{args.year}" / "examples" / f"{example_stem}.txt"
-input_file_user    = Path("puzzles") / f"{args.year}" / "inputs" / f"{args.day}.txt"
-code_file          = Path("puzzles") / f"{args.year}" / "solutions" / f"{args.day}.{args.lang}"
-template_file      = Path("templates") / f".{args.lang}"
+input_file_example = Path("inputs") / f"year_{args.year}" / f"day_{args.day:0>2}{ex_id}.txt"
+input_file_user    = Path("inputs") / f"year_{args.year}" / f"day_{args.day:0>2}.txt"
+code_file          = Path(directory) / f"year_{args.year}" / f"day_{args.day:0>2}.{args.lang}"
+template_file      = Path(directory) / f"template.{args.lang}"
 
 aoc_url = f"https://adventofcode.com/{args.year}/day/{args.day}/input"
 aoc_cookie = Path(".cookie").read_text().strip()

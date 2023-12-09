@@ -1,6 +1,7 @@
 .DS_Store
 
 /debug/
-/puzzles/*/inputs/
+inputs/*/*
+!inputs/*/*example*
 /.cookie
 *.log
