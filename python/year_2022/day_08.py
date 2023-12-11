@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 
-data = sys.stdin.read()
 __ = lambda *a, **kw: print(*a, **kw, file=sys.stderr)
 
 # ----- START OF SOLUTION -----
@@ -68,5 +67,7 @@ def get_max_scenic_score(forest_scheme: str) -> int:
     return max_score
 
 
-print("1:", count_visible_trees(data))
-print("2:", get_max_scenic_score(data))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", count_visible_trees(data), sep="\n")
+    print("[PART 2]", get_max_scenic_score(data), sep="\n")

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -49,5 +48,7 @@ def print_crt(program: str) -> str:
     )
 
 
-print("1:", sum_signal_strengths(data))
-print("2:", print_crt(data), sep="\n")
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", sum_signal_strengths(data), sep="\n")
+    print("[PART 2]", print_crt(data), sep="\n")

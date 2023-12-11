@@ -2,7 +2,6 @@
 import sys
 import re
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -55,6 +54,8 @@ def solve_2(data: str) -> int:
     return total
 
 
-# Part 1 can be solved with solve_2 but part 2 cannot be solved by solve_1
-print("1:", solve_1(data))
-print("2:", solve_2(data))
+if __name__ == "__main__":
+    # Part 1 can be solved with solve_2 but part 2 cannot be solved by solve_1
+    data = sys.stdin.read()
+    print("[PART 1]", solve_1(data), sep="\n")
+    print("[PART 2]", solve_2(data), sep="\n")

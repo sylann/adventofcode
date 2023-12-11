@@ -2,7 +2,6 @@
 import sys
 import typing as t
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -30,5 +29,9 @@ def count_needed_reviews(data: str, not_ok: t.Callable[[Range, Range], bool]) ->
     return total
 
 
-print("1:", count_needed_reviews(data, not_ok=lambda a, b: a.contains(b) or b.contains(a)))
-print("2:", count_needed_reviews(data, not_ok=lambda a, b: a.overlaps(b)))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    sol_1 = count_needed_reviews(data, not_ok=lambda a, b: a.contains(b) or b.contains(a))
+    sol_2 = count_needed_reviews(data, not_ok=lambda a, b: a.overlaps(b))
+    print("[PART 1]", sol_1, sep="\n")
+    print("[PART 2]", sol_2, sep="\n")

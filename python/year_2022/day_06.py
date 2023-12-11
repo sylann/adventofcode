@@ -2,7 +2,6 @@
 import collections
 import sys
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -28,5 +27,7 @@ def find_marker(data: str, marker_size: int) -> int:
     assert False, "puzzle doesn't mention missing marker"
 
 
-print(f"1:", find_marker(data, 4))
-print(f"2:", find_marker(data, 14))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", find_marker(data, 4), sep="\n")
+    print("[PART 2]", find_marker(data, 14), sep="\n")

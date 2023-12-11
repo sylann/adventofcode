@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 import sys
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
 
-elfs = [sum(map(int, elf.split("\n"))) for elf in data.strip().split("\n\n")]
-elfs.sort(reverse=True)
 
-print("1:", elfs[0])
-print("2:", sum(elfs[:3]))
+def get_elves(data: str):
+    elves = [sum(map(int, elf.split("\n"))) for elf in data.strip().split("\n\n")]
+    elves.sort(reverse=True)
+    return elves
+
+
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    elves = get_elves(data)
+    print("[PART 1]", elves[0], sep="\n")
+    print("[PART 2]", sum(elves[:3]), sep="\n")

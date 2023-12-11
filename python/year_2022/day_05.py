@@ -2,7 +2,6 @@
 import sys
 import typing as t
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -69,5 +68,7 @@ def operate(data: str, Crane: type[Crane9000]) -> str:
     return cargo.read_top_crates_ids()
 
 
-print("1:", operate(data, Crane9000))
-print("2:", operate(data, Crane9001))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", operate(data, Crane9000), sep="\n")
+    print("[PART 2]", operate(data, Crane9001), sep="\n")

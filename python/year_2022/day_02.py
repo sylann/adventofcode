@@ -3,7 +3,6 @@ import enum
 import sys
 import typing as t
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -77,5 +76,8 @@ def get_final_score(data: str, interpret: FInterpretLine) -> int:
 
     return total
 
-print("1:", get_final_score(data, guess_meaning))
-print("2:", get_final_score(data, decode_meaning))
+
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", get_final_score(data, guess_meaning), sep="\n")
+    print("[PART 2]", get_final_score(data, decode_meaning), sep="\n")

@@ -3,7 +3,6 @@ import itertools
 import sys
 import typing as t
 
-data = sys.stdin.read()
 __ = lambda *a, **kw: print(*a, **kw, file=sys.stderr)
 
 # ----- START OF SOLUTION -----
@@ -143,6 +142,8 @@ class Simulation:
         return len(visited_by_tail)
 
 
-sim = Simulation(data)
-print("1:", sim.count_visited(rope_size=2))
-print("2:", sim.count_visited(rope_size=10))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    sim = Simulation(data)
+    print("[PART 1]", sim.count_visited(rope_size=2), sep="\n")
+    print("[PART 2]", sim.count_visited(rope_size=10), sep="\n")

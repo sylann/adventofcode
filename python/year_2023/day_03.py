@@ -2,7 +2,6 @@
 import collections
 import sys
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -69,5 +68,7 @@ def solve_2(data: str) -> int:
     return total
 
 
-print("1:", solve_1(data))
-print("2:", solve_2(data))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    print("[PART 1]", solve_1(data), sep="\n")
+    print("[PART 2]", solve_2(data), sep="\n")

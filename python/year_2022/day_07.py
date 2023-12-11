@@ -3,7 +3,6 @@ import dataclasses
 import sys
 import typing as t
 
-data = sys.stdin.read()
 __ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
 
 # ----- START OF SOLUTION -----
@@ -102,7 +101,10 @@ def find_dir_to_delete_for_update(tree: NodeDir, disk_size: int, update_size: in
     return min(n.size for n, _ in tree.walk() if n.size > missing_space)
 
 
-tree = reconstruct_file_tree(data)
-
-print("1:", sum_size_of_smallest_dirs(tree, max_size=100000))
-print("2:", find_dir_to_delete_for_update(tree, disk_size=70000000, update_size=30000000))
+if __name__ == "__main__":
+    data = sys.stdin.read()
+    tree = reconstruct_file_tree(data)
+    sol_1 = sum_size_of_smallest_dirs(tree, max_size=100000)
+    sol_2 = find_dir_to_delete_for_update(tree, disk_size=70000000, update_size=30000000)
+    print("[PART 1]", sol_1, sep="\n")
+    print("[PART 2]", sol_2, sep="\n")
