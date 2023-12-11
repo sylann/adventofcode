@@ -44,16 +44,15 @@ The day (or id) of the puzzle. e.g. "1", "2".
 """
 
 p.add_argument("-e", "--example", nargs="?", default=False, const=True).help = """\
-Execute the script with the example input from the website's puzzle description
-instead of the one that is specific to the user.
-The example file must have been created first. This is not done automatically.
+Use an example input file instead of the user specific input file.
 
-Optionally give the suffix of an alternate example file to use instead of the
-default one. Alternate example files must always have a path identical to the
-default example with a suffix. e.g. `inputs/year_2022/day_06_example_<suffix>`.
-This makes organisation consistent and cli use easy.
-For example execute `./aoc.py 2022 6 -e hello` in your terminal to execute
-`python/year_2022/day_06.py` with `inputs/year_2022/day_06_example_hello.txt`.
+The example file is created if missing but its content must be retrieved manually
+from the website's puzzle description (it can't reliably be scrapped from the page).
+
+EXAMPLES:
+    aoc 2022 6 -e        ->  inputs/year_2022/day_06_example.txt
+    aoc 2022 6 -e 1      ->  inputs/year_2022/day_06_example_1.txt
+    aoc 2022 6 -e hello  ->  inputs/year_2022/day_06_example_hello.txt
 """
 
 p.add_argument("-d", "--debug", action="store_true").help = """\
@@ -108,6 +107,13 @@ if not args.example and not input_file_user.exists():
 
     input_file_user.parent.mkdir(parents=True, exist_ok=True)
     input_file_user.write_text(text)
+
+
+if not input_file_example.exists():
+    print(f"[INFO] Writing example file (no content)")
+
+    input_file_example.parent.mkdir(parents=True, exist_ok=True)
+    input_file_example.touch()
 
 
 if not code_file.exists():
