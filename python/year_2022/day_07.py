@@ -2,10 +2,7 @@
 import dataclasses
 import sys
 import typing as t
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 @dataclasses.dataclass
@@ -80,14 +77,15 @@ def reconstruct_file_tree(terminal_output: str) -> NodeDir:
                 if not cwd.get_child(name):
                     cwd.children.append(NodeFile(name, parent=cwd, size=int(size)))
             case x:
-                __(f"Unhandled case: {x}")
+                if __debug__: eprint(f"Unhandled case: {x}")
 
     return root
 
 
 def sum_size_of_smallest_dirs(tree: NodeDir, max_size: int) -> int:
-    for node, depth in tree.walk():
-        __("  " * depth + f"- {node}")
+    if __debug__:
+        for node, depth in tree.walk():
+            eprint("  " * depth + f"- {node}")
 
     return sum(n.size for n, _ in tree.walk() if isinstance(n, NodeDir) and n.size < max_size)
 
@@ -95,6 +93,11 @@ def sum_size_of_smallest_dirs(tree: NodeDir, max_size: int) -> int:
 def find_dir_to_delete_for_update(tree: NodeDir, disk_size: int, update_size: int):
     free_space = disk_size - tree.size
     missing_space = max(0, update_size - free_space)
+
+    if __debug__:
+        for node, depth in tree.walk():
+            eprint("  " * depth + f"- {node}")
+        eprint(f"tree.size: {tree.size}  free: {free_space}  missing: {missing_space}")
 
     assert missing_space > 0, "puzzle doesn't mention case with no missing space"
 

@@ -5,14 +5,13 @@ This is just a personal repo for puzzles of https://adventofcode.com.
 Contains a cool helper script to automatically download, organize and run a
 puzzle by simply giving a **year** and a **day** in the CLI.
 
-Initially thought to work with python files but it should work with any immediately
-executable script file (as opposed to files that need to be compiled first).
+Only works with python for now, but I intend to add other languages, one day.
 
 ## Get started
 
 - Have python installed (3.10 at least)
 
-- Setup authentication
+- Setup the authentication
   (This lets you download your input files from https://adventofcode.com)
 
   - If not done already, create an account on https://adventofcode.com
@@ -24,35 +23,25 @@ executable script file (as opposed to files that need to be compiled first).
 - [aoc.py](./aoc.py) should already be executable.
   (If not, run `chmod u+x aoc.py` on Linux/MacOS)
 
-- Prepare a puzzle, for example the first of 2022: `./aoc.py 2022 1`
+- Optionally add a symlink of `aoc.py` in a directory that is in the PATH for extra conciseness:
+  - `ln -s path/to/this-project/aoc.py  ~/.local/bin/aoc`
 
-  - This also runs the file but if it did not exist, it won't do much at first 😅
+- Prepare a puzzle, for example the first of 2022: `aoc 2022 1`
 
-- Happy coding! 🎉
+- Write a solution in the generated solution file
 
+- Re-run `aoc 2022 1` to check the result
 
-## Logging
-
-By default, stderr will not appear in the console when running a puzzle solution.
-Even if enabled, there is an arbitrary limit to the number of stderr lines that
-will be printed.
-
-This is to avoid flooding the terminal when running a puzzle with user specific
-input that tends to be large.
-
-It is possible to go against this default behaviour, here are some examples:
+Variations on the command:
 
 ```sh
-# Enable printing of errors and logging messages
-./aoc.py 2022 1 -d
-./aoc.py 2022 1 --debug
-# Also increase the maximum number of debug lines to 1000
-./aoc.py 2022 1 -d --max-debug-lines 1000
+aoc 2022 1
+aoc 2022 1 -e
+aoc 2022 1 -e1
+aoc 2022 1 -e foo
+aoc 2022 1 -d
+aoc 2022 1 --debug
 ```
-
-> **NOTE**: Stderr is intercepted by the `aoc.py` script but there is currently
-> no attempt to limit the performance impact of printing to stderr in puzzle
-> solutions.
 
 ## Project structure
 
@@ -85,11 +74,3 @@ Organization of files related to working on a puzzle
   │
   └── aoc.py        Entry point
 ```
-
-## TODO
-
-Add support for rust files.
-
-## Disclaimer
-
-I'm not trying to make this work on Windows. It might work, but I doubt it.

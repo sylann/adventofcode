@@ -2,10 +2,7 @@
 import enum
 import sys
 import typing as t
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 class Shape(enum.IntEnum):
@@ -70,7 +67,7 @@ def get_final_score(data: str, interpret: FInterpretLine) -> int:
         # Example line: "A X"
         l, r, o = interpret(line)
 
-        __(f"{r.name:<8} {l.name:<8}  {r} + {o} = {r + o}")
+        if __debug__: eprint(f"{r.name:<8} {l.name:<8}  {r} + {o} = {r + o}")
 
         total += r + o
 

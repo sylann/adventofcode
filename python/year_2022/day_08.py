@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
-__ = lambda *a, **kw: print(*a, **kw, file=sys.stderr)
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 TForest = tuple[list[list[int]], int, int]
@@ -14,8 +11,8 @@ def inspect_forest(forest_scheme: str) -> TForest:
 
     w, h = len(forest[0]), len(forest)
 
-    __(f"forest = {forest}")
-    __(f"w, h = {w}, {h}")
+    if __debug__: eprint(f"forest = {forest}")
+    if __debug__: eprint(f"w, h = {w}, {h}")
 
     return forest, w, h
 
@@ -24,12 +21,12 @@ def count_visible_trees(forest_scheme: str) -> int:
     forest, w, h = inspect_forest(forest_scheme)
 
     n_visible = (w + h - 2) * 2  # Outer trees are always visible
-    __(f"n_visible = {n_visible}")
+    if __debug__: eprint(f"n_visible = {n_visible}")
 
     for x in range(1, w-1):
         for y in range(1, h-1):
             tree = forest[y][x]
-            __(f"x, y = {x}, {y}")
+            if __debug__: eprint(f"x, y = {x}, {y}")
 
             n_visible += (
                    tree > max(forest[y][cx] for cx in range(x))       # left
@@ -61,7 +58,7 @@ def get_max_scenic_score(forest_scheme: str) -> int:
             for vdd, cy in enumerate(range(y+1, h),    start=1):  # down
                 if forest[cy][x] >= tree: break
 
-            __(f"x, y = {x}, {y}  score = {vdl} * {vdr} * {vdu} * {vdd}")
+            if __debug__: eprint(f"x, y = {x}, {y}  score = {vdl} * {vdr} * {vdu} * {vdd}")
             max_score = max(max_score, vdl * vdr * vdu * vdd)
 
     return max_score

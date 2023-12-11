@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import collections
 import sys
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
 
 class Grid:
     def __init__(self, data: str) -> None:

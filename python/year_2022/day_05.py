@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import typing as t
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 class Procedure(t.NamedTuple):
@@ -34,7 +31,7 @@ class Cargo:
                 if crate != " ":
                     self.stacks[sid].append(crate)
 
-        __(f"stacks = {self.stacks}")
+        if __debug__: eprint(f"stacks = {self.stacks}")
 
     def read_top_crates_ids(self) -> str:
         return "".join(stack[-1] for stack in self.stacks.values())
@@ -62,7 +59,7 @@ def operate(data: str, Crane: type[Crane9000]) -> str:
 
     for x in procs_str.split("\n"):
         proc = Procedure.from_str(x) 
-        __(proc)
+        if __debug__: eprint(proc)
         crane.move_crates(cargo, proc)
 
     return cargo.read_top_crates_ids()

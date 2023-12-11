@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import collections
 import sys
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 def find_marker(data: str, marker_size: int) -> int:
@@ -12,10 +9,9 @@ def find_marker(data: str, marker_size: int) -> int:
 
     window = collections.deque(maxlen=marker_size)
 
-    __(f"")
-    __(f"   i window c (marker_size={marker_size})")
+    if __debug__: eprint(f"\n   i window c (marker_size={marker_size})")
     for i, c in enumerate(data):
-        __(f"{i:>4} {''.join(window)} {c}")
+        if __debug__: eprint(f"{i:>4} {''.join(window)} {c}")
         if c in window:
             while c != window.popleft():
                 pass

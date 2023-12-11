@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 def iter_cpu_cycles(program: str):

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import typing as t
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
 
 priorities = {
     **{chr(ord('a') + x): x + 1 for x in range(0, 26)},
@@ -30,7 +28,7 @@ def count_priority(it: t.Iterator[set[str]]) -> int:
     commons = []
 
     for common in it:
-        __(f"common = {common}")
+        if __debug__: eprint(f"common = {common}")
         commons += common
 
     return sum(priorities[c] for c in commons)

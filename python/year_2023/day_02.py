@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 import sys
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
 
 rule = {"red": 12, "green": 13, "blue": 14}
 

@@ -2,10 +2,7 @@
 import itertools
 import sys
 import typing as t
-
-__ = lambda *a, **kw: print(*a, **kw, file=sys.stderr)
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 Direction = t.Literal["U", "D", "L", "R"]
@@ -73,7 +70,7 @@ class Simulation:
         self.width = max_x - min_x + 1
         self.height = max_y - min_y + 1
         self.initial_pos = Vec2(-min_x, -min_y)
-        __(
+        if __debug__: eprint(
             f"Grid({self.width}x{self.height}): x=[{min_x},{max_x}] y=[{min_y},{max_y}]"
             + f" start={self.initial_pos}"
         )
@@ -126,7 +123,7 @@ class Simulation:
 
         visited_by_tail = set()
         visited_by_tail.add(T)
-        __(f"== Initial State ==\n\n{self.repr_state([H, *mid_knots, T])}\n")
+        if __debug__: eprint(f"== Initial State ==\n\n{self.repr_state([H, *mid_knots, T])}\n")
 
         for mi, move in enumerate(self.moves):
             H = H + move
@@ -137,7 +134,7 @@ class Simulation:
 
             T = T.follow(leading)
             visited_by_tail.add(T)
-            __(f"== [{mi}] {move} ==\n\n{self.repr_state([H, *mid_knots, T])}\n")
+            # if __debug__: eprint(f"== [{mi}] {move} ==\n\n{self.repr_state([H, *mid_knots, T])}\n")
 
         return len(visited_by_tail)
 

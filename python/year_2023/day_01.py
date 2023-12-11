@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import re
-
-__ = lambda x: sys.stderr.write(f"[DEBUG] {x}\n")
-
-# ----- START OF SOLUTION -----
+def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 def first_digit(line: str) -> int:
