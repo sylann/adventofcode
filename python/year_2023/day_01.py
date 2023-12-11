@@ -25,7 +25,7 @@ def revstr(s: str) -> str:
 
 # I don't know how to efficiently seach backwards so I came with this idea of
 # matching reversed number names in a reversed string
-digits = "zero one two three four five six seven eight nine".split()
+digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 digit1_re = re.compile(r"^.*?(\d|" + "|".join(digits) + ")")
 digit2_re = re.compile(r"^.*?(\d|" + "|".join(map(revstr, digits)) + ")")
 
