@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import argparse
+import contextlib
 import stat
 import subprocess
+import time
 import urllib.request
 from pathlib import Path
 
@@ -134,6 +136,23 @@ if not code_file.exists():
     code_file.chmod(code_file.stat().st_mode | stat.S_IXUSR)  # chmod u+x
 
 
+@contextlib.contextmanager
+def benchmark():
+    t0 = time.perf_counter_ns()
+    yield
+    duration_ns = time.perf_counter_ns() - t0
+
+    units = ["ns", "µs", "ms", "s"]
+    duration, unit = duration_ns, units[0]
+    for u in units:
+        d = duration / 1000
+        if d < 1:
+            break
+        duration, unit = d, u
+
+    print(f"[Duration] {duration:.2f}{unit}")
+
+
 # TODO: handle more languages
 if args.lang == "py":
     if args.debug:
@@ -142,4 +161,8 @@ if args.lang == "py":
         CMD = f"python -O {code_file} < {input_file}"
 
     print(CMD)
-    subprocess.run(CMD, shell=True, timeout=args.timeout)
+    with benchmark():
+        try:
+            subprocess.run(CMD, shell=True, timeout=args.timeout)
+        except TimeoutError:
+            print(f"[Timeout {args.timeout}]")
