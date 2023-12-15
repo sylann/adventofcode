@@ -68,6 +68,13 @@ Controls what language is used to solve the puzzle.
 Defaults to "py".
 """
 
+p.add_argument("--timeout", type=int, default=5).help = """\
+Interrupt execution if it takes more than the given time in seconds.
+
+Defaults to 5 seconds.
+"""
+
+
 
 class Args(argparse.Namespace):
     year: int
@@ -75,6 +82,7 @@ class Args(argparse.Namespace):
     lang: str
     example: bool | str
     debug: bool
+    timeout: int
 
 
 args = p.parse_args(namespace=Args())
@@ -134,4 +142,4 @@ if args.lang == "py":
         CMD = f"python -O {code_file} < {input_file}"
 
     print(CMD)
-    subprocess.run(CMD, shell=True)
+    subprocess.run(CMD, shell=True, timeout=args.timeout)
