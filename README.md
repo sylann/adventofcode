@@ -26,21 +26,21 @@ Only works with python for now, but I intend to add other languages, one day.
 - Optionally add a symlink of `aoc.py` in a directory that is in the PATH for extra conciseness:
   - `ln -s path/to/this-project/aoc.py  ~/.local/bin/aoc`
 
-- Prepare a puzzle, for example the first of 2022: `aoc 2022 1`
+- Prepare a puzzle, for example the first of 2022: `aoc 2022 1 py`
 
 - Write a solution in the generated solution file
 
-- Re-run `aoc 2022 1` to check the result
+- Re-run `aoc 2022 1 py` to check the result
 
 Variations on the command:
 
 ```sh
-aoc 2022 1
-aoc 2022 1 -e
-aoc 2022 1 -e1
-aoc 2022 1 -e foo
-aoc 2022 1 -d
-aoc 2022 1 --debug
+aoc 2022 1 py
+aoc 2022 1 py -e
+aoc 2022 1 py -e1
+aoc 2022 1 py -e foo
+aoc 2022 1 py -d
+aoc 2022 1 py --debug
 ```
 
 ## Project structure

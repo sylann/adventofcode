@@ -42,6 +42,12 @@ p.add_argument("day", type=int).help="""\
 The day (or id) of the puzzle. e.g. "1", "2".
 """
 
+p.add_argument("lang", choices=directory_by_lang).help = """\
+The programming language to use (corresponds to the file extension).
+
+Also prepares a solution file based on the language tempalte, if it does not yet exist.
+"""
+
 p.add_argument("-e", "--example", nargs="?", default=False, const=True).help = """\
 Use an example input file instead of the user specific input file.
 
@@ -49,22 +55,13 @@ The example file is created if missing but its content must be retrieved manuall
 from the website's puzzle description (it can't reliably be scrapped from the page).
 
 EXAMPLES:
-    aoc 2022 6 -e        ->  inputs/year_2022/day_06_example.txt
-    aoc 2022 6 -e 1      ->  inputs/year_2022/day_06_example_1.txt
-    aoc 2022 6 -e hello  ->  inputs/year_2022/day_06_example_hello.txt
+    aoc 2022 6 py -e        ->  inputs/year_2022/day_06_example.txt
+    aoc 2022 6 py -e 1      ->  inputs/year_2022/day_06_example_1.txt
+    aoc 2022 6 py -e hello  ->  inputs/year_2022/day_06_example_hello.txt
 """
 
 p.add_argument("-d", "--debug", action="store_true").help = """\
 Enable debugging mode (disable optimization) and write debug messages to `debug.log`.
-"""
-
-p.add_argument("-l", "--lang", default="py", choices=directory_by_lang).help = """\
-The file extension of the desired programming language.
-
-Used to generate the correct solution file if it does not yet exist.
-Controls what language is used to solve the puzzle.
-
-Defaults to "py".
 """
 
 p.add_argument("--timeout", type=int, default=5).help = """\
