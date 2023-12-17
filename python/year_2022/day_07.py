@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import dataclasses
 import sys
 import typing as t

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import sys
 import re
 def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import stat
 import subprocess
 import urllib.request
 from pathlib import Path
@@ -131,7 +130,6 @@ if not code_file.exists():
 
     code_file.parent.mkdir(parents=True, exist_ok=True)
     code_file.write_text(content)
-    code_file.chmod(code_file.stat().st_mode | stat.S_IXUSR)  # chmod u+x
 
 
 # TODO: handle more languages
