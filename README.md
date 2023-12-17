@@ -11,46 +11,31 @@ Currently trying to add benchmarking and profiling stuff, but I don't know much 
 
 ## Get started
 
+- Prepare a puzzle solution: `bin/new.sh 2023 1 py`
+  - Also get the user input: `bin/new.sh 2023 1 py --get`
+
+- Run a puzzle solution: `bin/run.sh 2023 1 py`
+
+**Requirements**:
 - Python 3.10 is required to execute python solutions
 - Golang 1.21 is required to execute go solutions
 
-- Setup the authentication
-  (This lets you download your input files from https://adventofcode.com)
-
+- You need to setup the [.cookie](./.cookie) file to be able to download the user-specific input from https://adventofcode.com.
   - If not done already, create an account on https://adventofcode.com
   - Authenticate on the website
   - inspect requests
   - retrieve the `Cookie` header
   - paste it in the [.cookie](./.cookie) file
 
-- [aoc.py](./aoc.py) should already be executable.
-  (If not, run `chmod u+x aoc.py` on Linux/MacOS)
-
-- Optionally add a symlink of `aoc.py` in a directory that is in the PATH for extra conciseness:
-  - `ln -s path/to/this-project/aoc.py  ~/.local/bin/aoc`
-
-- Prepare a puzzle, for example the first of 2022: `aoc 2022 1 py`
-
-- Write a solution in the generated solution file
-
-- Re-run `aoc 2022 1 py` to check the result
-
-Variations on the command:
-
-```sh
-aoc 2022 1 py
-aoc 2022 1 py -e
-aoc 2022 1 py -e1
-aoc 2022 1 py -e foo
-aoc 2022 1 py -d
-aoc 2022 1 py --debug
-```
-
 ## Project structure
 
 Organization of files related to working on a puzzle
 
 ```
+  ├── bin
+  │   ├── new.sh    Prepare a puzzle
+  │   └── run.sh    Execute a puzzle solution
+  │
   ├── inputs
   │   └── year_<year>
   │       │
@@ -73,7 +58,6 @@ Organization of files related to working on a puzzle
   │       │
   │       └── day_<0n>.<ext>    Automatically created, using the language's template if available
   │
-  ├── .cookie       (Not tracked in git)
-  │
-  └── aoc.py        Entry point
+  └── .cookie       (Not tracked in git)
+  
 ```
