@@ -33,7 +33,7 @@ fi
 
 if [ "$lang" == "py" ]; then
 
-	path_code="python/year_${year}/day_${oday}.py"
+	path_code="src/py/year_${year}/day_${oday}.py"
 
 	if [ -n "$debug" ]; then
 		echo python "$path_code" "<" "$path_in" "2>" debug.log
@@ -46,11 +46,11 @@ if [ "$lang" == "py" ]; then
 elif [ "$lang" == "go" ]; then
 
 	if [ -n "$debug" ]; then
-		echo go run ./golang "$year" "$day" "<" "$path_in" "2>" debug.log
-		go run ./golang "$year" "$day" < "$path_in" 2> debug.log
+		echo go run ./src/go "$year" "$day" "<" "$path_in" "2>" debug.log
+		go run ./src/go "$year" "$day" < "$path_in" 2> debug.log
 	else
-		echo go build -o golang/aoc -ldflags "-s" ./golang "&&" golang/aoc "$year" "$day" "<" "$path_in"
-		go build -o golang/aoc -ldflags "-s" ./golang && golang/aoc "$year" "$day" < "$path_in"
+		echo go build -o src/go/aoc -ldflags "-s" ./src/go "&&" src/go/aoc "$year" "$day" "<" "$path_in"
+		go build -o src/go/aoc -ldflags "-s" ./src/go && src/go/aoc "$year" "$day" < "$path_in"
 	fi
 
 fi

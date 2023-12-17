@@ -51,12 +51,14 @@ Organization of files related to working on a puzzle
   │       │
   │       └── day_<0n>.txt
   │
-  ├── <language>
-  │   └── year_<year>
-  │       │
-  │       ├── template.<ext>    May be written to speedup initialization of a puzzle
-  │       │
-  │       └── day_<0n>.<ext>    Automatically created, using the language's template if available
+  ├── src
+  │   └── <lang>
+  │       └── year_<year>
+  │           │
+  │           ├── template_base   May be used as a year entry point for some languages
+  │           ├── template_day    May be written to speedup initialization of a puzzle
+  │           │
+  │           └── day_<0n>.<ext>    Automatically created, using the language's template if available
   │
   └── .cookie       (Not tracked in git)
   

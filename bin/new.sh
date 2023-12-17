@@ -50,20 +50,20 @@ feed_template() {
 
 if [ "$lang" = "py" ]; then
 
-	path_year="python/year_${year}"
-	path_day="python/year_${year}/day_${oday}.py"
-	path_tmpl_day="python/template_day"
+	path_year="src/py/year_${year}"
+	path_day="src/py/year_${year}/day_${oday}.py"
+	path_tmpl_day="src/py/template_day"
 
 	if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
 	if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
 
 elif [ "$lang" = "go" ]; then
 
-	path_year="golang/year_${year}"
-	path_day="golang/year_${year}/day_${oday}.go"
-	path_tmpl_day="golang/template_day"
-	path_base="golang/year_${year}/base.go"
-	path_tmpl_base="golang/template_base"
+	path_year="src/go/year_${year}"
+	path_day="src/go/year_${year}/day_${oday}.go"
+	path_tmpl_day="src/go/template_day"
+	path_base="src/go/year_${year}/base.go"
+	path_tmpl_base="src/go/template_base"
 
 	if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
 	if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
