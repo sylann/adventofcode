@@ -26,22 +26,6 @@ class Almanac:
             else:
                 cur[1].append(MapRange(*map(int, line.split())))
 
-    def create_implicit_ranges(self):
-        """Create ranges for values that map to themselves.
-
-        These ranges implicitely exist between the explicitely defined ranges.
-        They are in fact exactly the same because in this case dst is src, hence incrementing src by 1 increments dst by 1 too.
-        """
-        for _, ranges in self.maps.values():
-            ranges.sort(key=lambda r: r.src)
-            start = 0
-            for i in range(len(ranges)):
-                rng = ranges[i]
-                size = rng.src - start
-                if size > 1:
-                    ranges.append(MapRange(start, start, size))
-                start = rng.src + rng.size
-
     def convert(self, cat: str, target: str, num: int, n_after=1) -> tuple[int, int]:
         """Convert a value "num" from category "cat" to category "target".
 
@@ -77,7 +61,6 @@ class Almanac:
 
 def solve_1(data: str):
     alma = Almanac(data)
-    alma.create_implicit_ranges()
     if __debug__: eprint(alma)
 
     minloc = 10**15  # Largely enough
@@ -89,7 +72,6 @@ def solve_1(data: str):
 
 def solve_2(data: str):
     alma = Almanac(data)
-    alma.create_implicit_ranges()
     if __debug__: eprint(alma)
 
     minloc = 10**15  # Largely enough
