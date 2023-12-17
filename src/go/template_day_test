@@ -1,0 +1,21 @@
+package year___year__
+
+import (
+	"testing"
+
+	"github.com/sylann/adventofcode/utils"
+)
+
+func BenchmarkDay__day___Solve1(b *testing.B) {
+	day, data := Day__day__{}, utils.ReadInputData(b, "year___year__/day___day__.txt")
+	for i := 0; i < b.N; i++ {
+		day.Solve1(data)
+	}
+}
+
+func BenchmarkDay__day___Solve2(b *testing.B) {
+	day, data := Day__day__{}, utils.ReadInputData(b, "year___year__/day___day__.txt")
+	for i := 0; i < b.N; i++ {
+		day.Solve2(data)
+	}
+}
