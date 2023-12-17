@@ -1,6 +1,6 @@
-import sys
 import typing as t
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
+
+from py.utils.debug import eprint
 
 
 class Procedure(t.NamedTuple):
@@ -65,6 +65,8 @@ def operate(data: str, Crane: type[Crane9000]) -> str:
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", operate(data, Crane9000), sep="\n")
     print("[PART 2]", operate(data, Crane9001), sep="\n")

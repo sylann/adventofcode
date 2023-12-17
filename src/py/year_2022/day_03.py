@@ -1,6 +1,6 @@
-import sys
 import typing as t
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
+
+from py.utils.debug import eprint
 
 
 priorities = {
@@ -34,6 +34,8 @@ def count_priority(it: t.Iterator[set[str]]) -> int:
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     sol_1 = count_priority(iter_common_in_rs_halves(data))
     sol_2 = count_priority(iter_common_in_3_rs(data))

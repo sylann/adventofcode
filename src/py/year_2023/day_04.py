@@ -1,6 +1,4 @@
 import functools
-import sys
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 def solve_1(data: str):
@@ -34,6 +32,8 @@ def solve_2(data: str):
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", solve_1(data), sep="\n")
     print("[PART 2]", solve_2(data), sep="\n")

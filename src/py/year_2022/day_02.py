@@ -1,7 +1,6 @@
 import enum
-import sys
 import typing as t
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
+from py.utils.debug import eprint
 
 
 class Shape(enum.IntEnum):
@@ -74,6 +73,8 @@ def get_final_score(data: str, interpret: FInterpretLine) -> int:
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", get_final_score(data, guess_meaning), sep="\n")
     print("[PART 2]", get_final_score(data, decode_meaning), sep="\n")

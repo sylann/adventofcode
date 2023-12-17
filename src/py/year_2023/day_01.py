@@ -1,6 +1,4 @@
-import sys
 import re
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 def first_digit(line: str) -> int:
@@ -52,6 +50,8 @@ def solve_2(data: str) -> int:
 
 if __name__ == "__main__":
     # Part 1 can be solved with solve_2 but part 2 cannot be solved by solve_1
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", solve_1(data), sep="\n")
     print("[PART 2]", solve_2(data), sep="\n")

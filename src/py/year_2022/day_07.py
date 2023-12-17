@@ -1,7 +1,7 @@
 import dataclasses
-import sys
 import typing as t
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
+
+from py.utils.debug import eprint
 
 
 @dataclasses.dataclass
@@ -104,6 +104,8 @@ def find_dir_to_delete_for_update(tree: NodeDir, disk_size: int, update_size: in
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     tree = reconstruct_file_tree(data)
     sol_1 = sum_size_of_smallest_dirs(tree, max_size=100000)

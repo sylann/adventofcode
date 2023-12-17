@@ -1,6 +1,4 @@
-import sys
 import typing as t
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
 
 
 class Range(t.NamedTuple):
@@ -26,6 +24,8 @@ def count_needed_reviews(data: str, not_ok: t.Callable[[Range, Range], bool]) ->
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     sol_1 = count_needed_reviews(data, not_ok=lambda a, b: a.contains(b) or b.contains(a))
     sol_2 = count_needed_reviews(data, not_ok=lambda a, b: a.overlaps(b))

@@ -1,5 +1,4 @@
-import sys
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
+from py.utils.debug import eprint
 
 
 TForest = tuple[list[list[int]], int, int]
@@ -64,6 +63,8 @@ def get_max_scenic_score(forest_scheme: str) -> int:
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", count_visible_trees(data), sep="\n")
     print("[PART 2]", get_max_scenic_score(data), sep="\n")

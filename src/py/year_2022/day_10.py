@@ -1,7 +1,3 @@
-import sys
-def eprint(*a, **kw): print(*a, **kw, file=sys.stderr)
-
-
 def iter_cpu_cycles(program: str):
     reg_x = 1
 
@@ -45,6 +41,8 @@ def print_crt(program: str) -> str:
 
 
 if __name__ == "__main__":
+    import sys
+
     data = sys.stdin.read()
     print("[PART 1]", sum_signal_strengths(data), sep="\n")
     print("[PART 2]", print_crt(data), sep="\n")

@@ -33,14 +33,14 @@ fi
 
 if [ "$lang" == "py" ]; then
 
-	path_code="src/py/year_${year}/day_${oday}.py"
+	py_module="py.year_${year}.day_${oday}"
 
 	if [ -n "$debug" ]; then
-		echo python "$path_code" "<" "$path_in" "2>" debug.log
-		python "$path_code" < "$path_in" 2> debug.log
+		echo PYTHONPATH=./src python -m "$py_module" "<" "$path_in" "2>" debug.log
+		PYTHONPATH=./src python -m "$py_module" < "$path_in" 2> debug.log
 	else
-		echo python -O "$path_code" "<" "$path_in"
-		python -O "$path_code" < "$path_in"
+		echo PYTHONPATH=./src python -O -m "$py_module" "<" "$path_in"
+		PYTHONPATH=./src python -O -m "$py_module" < "$path_in"
 	fi
 
 elif [ "$lang" == "go" ]; then
