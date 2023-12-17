@@ -44,30 +44,21 @@ fi
 # ┃                     PREPARE CODE FILES                      ┃
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
+path_year="src/${lang}/year_${year}"
+path_day="src/${lang}/year_${year}/day_${oday}.${lang}"
+path_tmpl_day="src/${lang}/template_day"
+path_base="src/${lang}/year_${year}/base.${lang}"
+path_tmpl_base="src/${lang}/template_base"
+
 feed_template() {
 	sed -e "s/__year__/$year/g" -e "s/__day__/$oday/g" "$1"
 }
 
-if [ "$lang" = "py" ]; then
+if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
+if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
+if ! [ -f "$path_base" ] && [ -f "$path_tmpl_base" ]; then feed_template "$path_tmpl_base" > "$path_base"; fi
 
-	path_year="src/py/year_${year}"
-	path_day="src/py/year_${year}/day_${oday}.py"
-	path_tmpl_day="src/py/template_day"
-
-	if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
-	if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
-
-elif [ "$lang" = "go" ]; then
-
-	path_year="src/go/year_${year}"
-	path_day="src/go/year_${year}/day_${oday}.go"
-	path_tmpl_day="src/go/template_day"
-	path_base="src/go/year_${year}/base.go"
-	path_tmpl_base="src/go/template_base"
-
-	if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
-	if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
-	if ! [ -f "$path_base" ]; then feed_template "$path_tmpl_base" > "$path_base"; fi
+if [ "$lang" = "go" ]; then
+	[ -f "$path_base" ] || { echo "Unexpected missing file for go: $path_base"; exit 1; }
 	sed -e "s/nil, \/\/ Day$oday{},/Day$oday{},/" -i '' "$path_base"
-
 fi
