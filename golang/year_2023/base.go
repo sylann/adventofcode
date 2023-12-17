@@ -9,7 +9,7 @@ var Solutions = [24]utils.DaySolver{
 	nil, // Day02{},
 	nil, // Day03{},
 	nil, // Day04{},
-	nil, // Day05{},
+	Day05{},
 	nil, // Day06{},
 	nil, // Day07{},
 	nil, // Day08{},
