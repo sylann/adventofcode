@@ -2,6 +2,8 @@
 
 __pycache__/
 
+golang/aoc*
+
 /debug/
 inputs/*/*
 !inputs/*/*example*

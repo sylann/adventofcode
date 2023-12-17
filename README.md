@@ -2,14 +2,17 @@
 
 This is just a personal repo for puzzles of https://adventofcode.com.
 
-Contains a cool helper script to automatically download, organize and run a
-puzzle by simply giving a **year** and a **day** in the CLI.
+Contains helper scripts to automatically download, organize and run a
+puzzle by simply giving a **year**, a **day** and a **lang** in the CLI.
 
-Only works with python for now, but I intend to add other languages, one day.
+Only works with python and go for now. More languages to come!
+
+Currently trying to add benchmarking and profiling stuff, but I don't know much about it at this point.
 
 ## Get started
 
-- Have python installed (3.10 at least)
+- Python 3.10 is required to execute python solutions
+- Golang 1.21 is required to execute go solutions
 
 - Setup the authentication
   (This lets you download your input files from https://adventofcode.com)

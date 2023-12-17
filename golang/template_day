@@ -1,0 +1,11 @@
+package year___year__
+
+type Day__day__ struct{}
+
+func (Day__day__) Solve1(data string) string {
+	return ""
+}
+
+func (Day__day__) Solve2(data string) string {
+	return ""
+}

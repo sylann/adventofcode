@@ -7,6 +7,7 @@ from pathlib import Path
 
 directory_by_lang = {
     "py": "python",
+    "go": "golang",
 }
 
 DESCRIPTION = """\
@@ -83,14 +84,16 @@ class Args(argparse.Namespace):
 
 args = p.parse_args(namespace=Args())
 
-
 directory = directory_by_lang[args.lang]
 ex_id = "_example" + (f"_{args.example}" if isinstance(args.example, str) else "")
+oday = f"{args.day:0>2}"
 
-input_file_example = Path("inputs") / f"year_{args.year}" / f"day_{args.day:0>2}{ex_id}.txt"
-input_file_user    = Path("inputs") / f"year_{args.year}" / f"day_{args.day:0>2}.txt"
-code_file          = Path(directory) / f"year_{args.year}" / f"day_{args.day:0>2}.{args.lang}"
-template_file      = Path(directory) / f"template.{args.lang}"
+input_file_example = Path("inputs") / f"year_{args.year}" / f"day_{oday}{ex_id}.txt"
+input_file_user    = Path("inputs") / f"year_{args.year}" / f"day_{oday}.txt"
+code_day           = Path(directory) / f"year_{args.year}" / f"day_{oday}.{args.lang}"
+template_day       = Path(directory) / f"template_day"
+code_base          = Path(directory) / f"year_{args.year}" / f"base.{args.lang}"
+template_base      = Path(directory) / f"template_base"
 
 aoc_url = f"https://adventofcode.com/{args.year}/day/{args.day}/input"
 aoc_cookie = Path(".cookie").read_text().strip()
@@ -120,22 +123,41 @@ if not input_file_example.exists():
     input_file_example.touch()
 
 
-if not code_file.exists():
+if template_day.exists() and not code_day.exists():
     print(f"[INFO] Writing solution file")
 
-    content = template_file.read_text() if template_file.exists() else ""
+    content = template_day.read_text()
 
-    code_file.parent.mkdir(parents=True, exist_ok=True)
-    code_file.write_text(content)
+    code_day.parent.mkdir(parents=True, exist_ok=True)
+    code_day.write_text(content)
+
+if template_base.exists() and not code_base.exists():
+    print(f"[INFO] Writing year base file")
+
+    content = template_base.read_text()
+    code_base.write_text(content)
+
+if args.lang == "go":
+    assert code_base.exists()
+    content = code_base.read_text().replace(f"nil, // Day{oday}{{}}", f"Day{oday}{{}},")
+    code_base.write_text(content)
 
 
 # TODO: handle more languages
+CMD = None
 if args.lang == "py":
     if args.debug:
-        CMD = f"python {code_file} < {input_file} 2> debug.log"
+        CMD = f"python {code_day} < {input_file} 2> debug.log"
     else:
-        CMD = f"python -O {code_file} < {input_file}"
+        CMD = f"python -O {code_day} < {input_file}"
 
+if args.lang == "go":
+    if args.debug:
+        CMD = f"go run ./golang {args.year} {args.day} < {input_file} 2> debug.log"
+    else:
+        CMD = f"go build -o golang/aoc -ldflags '-s' ./golang && golang/aoc {args.year} {args.day} < {input_file}"
+
+if CMD is not None:
     print(CMD)
     try:
         subprocess.run(CMD, shell=True, timeout=args.timeout)
