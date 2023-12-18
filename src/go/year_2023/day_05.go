@@ -101,6 +101,10 @@ func (a *Almanac) String() string {
 
 type Day05 struct{}
 
+func init() {
+	Solutions[05-1] = Day05{}
+}
+
 func (Day05) Solve1(data string) string {
 	alma := NewAlmanac(data)
 	// fmt.Fprintln(os.Stderr, alma.String())

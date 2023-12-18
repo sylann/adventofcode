@@ -60,8 +60,3 @@ if ! [ -d "$path_year" ]; then mkdir -p "$path_year"; fi
 if ! [ -f "$path_day" ]; then feed_template "$path_tmpl_day" > "$path_day"; fi
 if ! [ -f "$path_day_test" ]; then feed_template "$path_tmpl_day_test" > "$path_day_test"; fi
 if ! [ -f "$path_base" ] && [ -f "$path_tmpl_base" ]; then feed_template "$path_tmpl_base" > "$path_base"; fi
-
-if [ "$lang" = "go" ]; then
-	[ -f "$path_base" ] || { echo "Unexpected missing file for go: $path_base"; exit 1; }
-	sed -e "s/nil, \/\/ Day$oday{},/Day$oday{},/" -i '' "$path_base"
-fi
