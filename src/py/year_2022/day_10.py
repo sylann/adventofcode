@@ -44,5 +44,5 @@ if __name__ == "__main__":
     import sys
 
     data = sys.stdin.read()
-    print("[PART 1]", sum_signal_strengths(data), sep="\n")
-    print("[PART 2]", print_crt(data), sep="\n")
+    print("\n[PART 1]", sum_signal_strengths(data), sep="\n")
+    print("\n[PART 2]", print_crt(data), sep="\n")

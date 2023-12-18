@@ -66,5 +66,5 @@ if __name__ == "__main__":
     import sys
 
     data = sys.stdin.read()
-    print("[PART 1]", count_visible_trees(data), sep="\n")
-    print("[PART 2]", get_max_scenic_score(data), sep="\n")
+    print("\n[PART 1]", count_visible_trees(data), sep="\n")
+    print("\n[PART 2]", get_max_scenic_score(data), sep="\n")

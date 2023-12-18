@@ -14,8 +14,8 @@ func main() {
 	year, day := parseArgs()
 	sol := getSolution(year, day)
 	data := readDataFromStdin()
-	fmt.Printf("[PART 1]\n%s\n", sol.Solve1(data))
-	fmt.Printf("[PART 2]\n%s\n", sol.Solve2(data))
+	fmt.Printf("\n[PART 1]\n%s\n", sol.Solve1(data))
+	fmt.Printf("\n[PART 2]\n%s\n", sol.Solve2(data))
 }
 
 type Solution interface {

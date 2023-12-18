@@ -26,5 +26,5 @@ if __name__ == "__main__":
     import sys
 
     data = sys.stdin.read()
-    print("[PART 1]", find_marker(data, 4), sep="\n")
-    print("[PART 2]", find_marker(data, 14), sep="\n")
+    print("\n[PART 1]", find_marker(data, 4), sep="\n")
+    print("\n[PART 2]", find_marker(data, 14), sep="\n")

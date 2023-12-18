@@ -110,5 +110,5 @@ if __name__ == "__main__":
     tree = reconstruct_file_tree(data)
     sol_1 = sum_size_of_smallest_dirs(tree, max_size=100000)
     sol_2 = find_dir_to_delete_for_update(tree, disk_size=70000000, update_size=30000000)
-    print("[PART 1]", sol_1, sep="\n")
-    print("[PART 2]", sol_2, sep="\n")
+    print("\n[PART 1]", sol_1, sep="\n")
+    print("\n[PART 2]", sol_2, sep="\n")

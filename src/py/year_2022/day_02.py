@@ -76,5 +76,5 @@ if __name__ == "__main__":
     import sys
 
     data = sys.stdin.read()
-    print("[PART 1]", get_final_score(data, guess_meaning), sep="\n")
-    print("[PART 2]", get_final_score(data, decode_meaning), sep="\n")
+    print("\n[PART 1]", get_final_score(data, guess_meaning), sep="\n")
+    print("\n[PART 2]", get_final_score(data, decode_meaning), sep="\n")

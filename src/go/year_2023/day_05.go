@@ -111,7 +111,7 @@ func (Day05) Solve1(data string) string {
 		loc, _ = alma.Convert("seed", "location", seed, 1)
 		minLoc = min(minLoc, loc)
 	}
-	return fmt.Sprintf("%d", minLoc)
+	return fmt.Sprint(minLoc)
 }
 
 func (Day05) Solve2(data string) string {
@@ -130,5 +130,5 @@ func (Day05) Solve2(data string) string {
 			nSeeds -= skip
 		}
 	}
-	return fmt.Sprintf("%d", minLoc)
+	return fmt.Sprint(minLoc)
 }

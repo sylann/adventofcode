@@ -68,5 +68,5 @@ if __name__ == "__main__":
     import sys
 
     data = sys.stdin.read()
-    print("[PART 1]", operate(data, Crane9000), sep="\n")
-    print("[PART 2]", operate(data, Crane9001), sep="\n")
+    print("\n[PART 1]", operate(data, Crane9000), sep="\n")
+    print("\n[PART 2]", operate(data, Crane9001), sep="\n")

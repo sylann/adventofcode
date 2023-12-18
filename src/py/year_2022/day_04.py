@@ -29,5 +29,5 @@ if __name__ == "__main__":
     data = sys.stdin.read()
     sol_1 = count_needed_reviews(data, not_ok=lambda a, b: a.contains(b) or b.contains(a))
     sol_2 = count_needed_reviews(data, not_ok=lambda a, b: a.overlaps(b))
-    print("[PART 1]", sol_1, sep="\n")
-    print("[PART 2]", sol_2, sep="\n")
+    print("\n[PART 1]", sol_1, sep="\n")
+    print("\n[PART 2]", sol_2, sep="\n")

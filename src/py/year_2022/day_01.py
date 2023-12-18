@@ -9,5 +9,5 @@ if __name__ == "__main__":
 
     data = sys.stdin.read()
     elves = get_elves(data)
-    print("[PART 1]", elves[0], sep="\n")
-    print("[PART 2]", sum(elves[:3]), sep="\n")
+    print("\n[PART 1]", elves[0], sep="\n")
+    print("\n[PART 2]", sum(elves[:3]), sep="\n")

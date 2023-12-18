@@ -39,5 +39,5 @@ if __name__ == "__main__":
     data = sys.stdin.read()
     sol_1 = count_priority(iter_common_in_rs_halves(data))
     sol_2 = count_priority(iter_common_in_3_rs(data))
-    print("[PART 1]", sol_1, sep="\n")
-    print("[PART 2]", sol_2, sep="\n")
+    print("\n[PART 1]", sol_1, sep="\n")
+    print("\n[PART 2]", sol_2, sep="\n")

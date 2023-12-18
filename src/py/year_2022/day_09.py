@@ -143,5 +143,5 @@ if __name__ == "__main__":
 
     data = sys.stdin.read()
     sim = Simulation(data)
-    print("[PART 1]", sim.count_visited(rope_size=2), sep="\n")
-    print("[PART 2]", sim.count_visited(rope_size=10), sep="\n")
+    print("\n[PART 1]", sim.count_visited(rope_size=2), sep="\n")
+    print("\n[PART 2]", sim.count_visited(rope_size=10), sep="\n")

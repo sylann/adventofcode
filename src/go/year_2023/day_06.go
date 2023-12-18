@@ -57,7 +57,7 @@ func (Day06) Solve1(data string) string {
 		dist, _ := strconv.Atoi(fields[i+half])
 		total *= CountChoices(time, dist)
 	}
-	return fmt.Sprintf("%d\n", total)
+	return fmt.Sprint(total)
 }
 
 // NOTE: I love how Part II of Advent of Code always manages to surprise you
@@ -66,5 +66,5 @@ func (Day06) Solve2(data string) string {
 	maxTime, consumed := parseBadKerning(data, 0)
 	bestDist, _ := parseBadKerning(data, consumed)
 	total := CountChoices(maxTime, bestDist)
-	return fmt.Sprintf("%d\n", total)
+	return fmt.Sprint(total)
 }
