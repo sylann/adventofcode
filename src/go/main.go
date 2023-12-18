@@ -27,9 +27,9 @@ func getSolution(year, day int) Solution {
 	var sol Solution
 	switch year {
 	case 2022:
-		sol = year_2022.Solutions[day-1]
+		sol = year_2022.Solutions[day]
 	case 2023:
-		sol = year_2023.Solutions[day-1]
+		sol = year_2023.Solutions[day]
 	}
 
 	if sol == nil {

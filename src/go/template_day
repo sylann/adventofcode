@@ -3,7 +3,7 @@ package year___year__
 type Day__day__ struct{}
 
 func init() {
-	Solutions[__day__-1] = Day__day__{}
+	Solutions[__day__] = Day__day__{}
 }
 
 func (Day__day__) Solve1(data string) string {

@@ -4,4 +4,5 @@ import (
 	"github.com/sylann/adventofcode/utils"
 )
 
-var Solutions = [24]utils.DaySolver{}
+// 1-based index [24]utils.DaySolver
+var Solutions = [1 + 24]utils.DaySolver{}

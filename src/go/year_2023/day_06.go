@@ -49,7 +49,7 @@ func CountChoices(maxTime, bestDist int) int {
 type Day06 struct{}
 
 func init() {
-	Solutions[06-1] = Day06{}
+	Solutions[06] = Day06{}
 }
 
 func (Day06) Solve1(data string) string {
