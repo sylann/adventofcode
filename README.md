@@ -12,9 +12,13 @@ Currently trying to add benchmarking and profiling stuff, but I don't know much 
 ## Get started
 
 - Prepare a puzzle solution: `bin/new.sh 2023 1 py`
-  - Also get the user input: `bin/new.sh 2023 1 py --get`
+  - Also get the user input: `bin/new.sh 2023 1 py --get` (Requires authentication)
 
 - Run a puzzle solution: `bin/run.sh 2023 1 py`
+  - in debug mode: `bin/run.sh 2023 1 py -d`
+  - using default example: `bin/run.sh 2023 1 py -e`
+  - using a specific example: `bin/run.sh 2023 1 py -E 1` (example_1)
+  - using a specific example: `bin/run.sh 2023 1 py -E 1a` (example_1a)
 
 **Requirements**:
 - Python 3.10 is required to execute python solutions
