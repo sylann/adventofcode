@@ -25,6 +25,9 @@ def build_graph(data: str):
 def solve_1(data: str):
     instructions, graph = build_graph(data)
 
+    if "AAA" not in graph or "ZZZ" not in graph:
+        return "BAD DATA: solve_1 is not compatible"
+
     cur, steps = "AAA", 1
     for dir in cycle(instructions):
         dst = graph[cur][dir]
