@@ -43,93 +43,58 @@ func (c Card) Value(strengths string) int {
 
 type Hand []Card // ordered slice of 5 Cards
 
+// Resolve hand's HandType.
 func (h Hand) Type(strengths string, useJoker bool) HandType {
-	countByValue := make([]int, len(strengths))
+	// Since there are always exactly 5 cards, the possible cases are limited and as follows:
+	// Cards <=> asNum <=> Name          :  # Jokers => New Results
+	// 5     <=> 50000 <=> FiveOfAKind   :  5|0      => 50000 | 50000
+	// 41    <=> 41000 <=> FourOfAKind   :  4|1|0    => 50000 | 50000 | 41000
+	// 32    <=> 32000 <=> FullHouse     :  3|2|0    => 50000 | 50000 | 32000
+	// 311   <=> 31100 <=> ThreeOfAKind  :  3|1|0    => 41000 | 41000 | 31100
+	// 221   <=> 22100 <=> TwoPairs      :  2|1|0    => 41000 | 32000 | 22100
+	// 2111  <=> 21110 <=> OnePair       :  2|1|0    => 31100 | 31100 | 21110
+	// 11111 <=> 11111 <=> HighCard      :  1|0      => 21110 | 11111
+	nJok, cts := 0, make([]int, len(strengths))
 	for _, c := range h {
-		countByValue[c.Value(strengths)] += 1
+		cts[c.Value(strengths)] += 1
 	}
-
-	orderedCounts := make([]int, len(strengths))
-	copy(orderedCounts, countByValue)
-	sort.Slice(orderedCounts, func(i1, i2 int) bool {
-		return orderedCounts[i2] < orderedCounts[i1] // descending
+	if useJoker { // Memorize number of jokers before sorting
+		nJok = cts[0] // at 0 because jokers are the weakest card
+	}
+	sort.Slice(cts, func(i1, i2 int) bool {
+		return cts[i2] < cts[i1] // descending
 	})
-
-	jokerCount := 0
-	if useJoker {
-		// By definition, the joker is the weakest card (hence, take the value at 0)
-		jokerCount = countByValue[0]
+	asNum := 10000*cts[0] + 1000*cts[1] + 100*cts[2] + 10*cts[3] + 1*cts[4]
+	switch {
+	case asNum == 41000 && nJok != 0: return FiveOfAKind
+	case asNum == 32000 && nJok != 0: return FiveOfAKind
+	case asNum == 31100 && nJok != 0: return FourOfAKind
+	case asNum == 22100 && nJok == 2: return FourOfAKind
+	case asNum == 22100 && nJok == 1: return FullHouse
+	case asNum == 21110 && nJok != 0: return ThreeOfAKind
+	case asNum == 11111 && nJok == 1: return OnePair
+	case asNum == 50000: return FiveOfAKind
+	case asNum == 41000: return FourOfAKind
+	case asNum == 32000: return FullHouse
+	case asNum == 31100: return ThreeOfAKind
+	case asNum == 22100: return TwoPair
+	case asNum == 21110: return OnePair
+	case asNum == 11111: return HighCard
+	default: panic("Unreachable")
 	}
-
-	// Now, there is only a 7 possible results without jokers, and some variations with jokers:
-	// Cards      -> Type  "name"              With n Jokers  ->  Types
-	// 5          -> 5     "Five of a Kind"    5|0            ->  5
-	// 4+1        -> 4     "Four of a Kind"    4|1|0          ->  5|5|3+2
-	// 3+2        -> 3+2   "Full house"        3|2|0          ->  5|5|3+2
-	// 3+1+1      -> 3     "Three of a Kind"   3|1|0          ->  4|4|3
-	// 2+2+1      -> 2+2   "Two Pairs"         2|1|0          ->  4|3+2|2+2
-	// 2+1+1+1    -> 2     "One Pair"          2|1|0          ->  3|3|2
-	// 1+1+1+1+1  -> 1     "High Card"         1|0            ->  2|1
-
-	if orderedCounts[0] == 5 { // 5
-		return FiveOfAKind
-	}
-	if orderedCounts[0] == 4 { // 4+1
-		if jokerCount != 0 {
-			return FiveOfAKind
-		}
-		return FourOfAKind
-	}
-	if orderedCounts[0] == 3 { // 3+2 or 3+1+1
-		if orderedCounts[1] == 2 {
-			if jokerCount != 0 {
-				return FiveOfAKind
-			}
-			return FullHouse
-		}
-		if jokerCount != 0 {
-			return FourOfAKind
-		}
-		return ThreeOfAKind
-	}
-	if orderedCounts[0] == 2 { // 2+2+1 or 2+1+1+1
-		if orderedCounts[1] == 2 {
-			if jokerCount == 2 {
-				return FourOfAKind
-			}
-			if jokerCount == 1 {
-				return FullHouse
-			}
-			return TwoPair
-		}
-		if jokerCount != 0 {
-			return ThreeOfAKind
-		}
-		return OnePair
-	}
-	if jokerCount != 0 { // 1+1+1+1+1
-		return OnePair
-	}
-	return HighCard
 }
 
 // Represent a whole hand's sortable strength with a single, non-ambiguous integer.
 func (h Hand) Strength(strengths string, useJoker bool) int {
-	ht := int(h.Type(strengths, useJoker))
-	v0 := h[0].Value(strengths)
-	v1 := h[1].Value(strengths)
-	v2 := h[2].Value(strengths)
-	v3 := h[3].Value(strengths)
-	v4 := h[4].Value(strengths)
 	// There are 7 different hand type and 13 different cards.
 	// So a base-13 number can represent everything without ambiguity.
-	out := ht * 4826809 // 13^6  (pre evaluated to avoid using math.pow)
-	out += v0 * 371293  // 13^5
-	out += v1 * 28561   // 13^4
-	out += v2 * 2197    // 13^3
-	out += v3 * 169     // 13^2
-	out += v4 * 13      // 13^1
-	// fmt.Fprintf(os.Stderr, "%9d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t", out, ht, v0, v1, v2, v3, v4, h)
+	// Use pre-calculated base 13 powers to avoid using math.Pow and having to deal with casts.
+	out := int(h.Type(strengths, useJoker)) * 4_826_809 // 13^6
+	out += h[0].Value(strengths) * 371_293              // 13^5
+	out += h[1].Value(strengths) * 28_561               // 13^4
+	out += h[2].Value(strengths) * 2_197                // 13^3
+	out += h[3].Value(strengths) * 169                  // 13^2
+	out += h[4].Value(strengths) * 13                   // 13^1
 	return out
 }
 
@@ -147,7 +112,6 @@ func CountWinnings(data, strengths string, useJoker bool) int {
 		hand := Hand(line[:5])
 		bid, _ := strconv.Atoi(line[6:])
 		strength := hand.Strength(strengths, useJoker)
-		// fmt.Fprintf(os.Stderr, "%d\n", bid)
 		games[i] = Game{strength, bid}
 	}
 
