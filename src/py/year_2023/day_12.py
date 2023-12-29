@@ -51,52 +51,44 @@ def count_bad(parts: str, sizes: list[int]) -> int:
 
 @functools.cache
 def consume(parts: str, size: int):
+    out = []
     match = 0
     strict_start = -1
     end = len(parts) - 1
     for i, p in enumerate(parts):
         if p == ".":
             match = 0
-            strict_start = -1
             continue
 
         if strict_start == -1 and p == "#":
             strict_start = i
-            # print("STR [", parts, strict_start)
 
         match += 1
+        # matches must be separated by a "." so there must not be a "#" after
         if match >= size and (i == end or parts[i+1] != "#"):
-            yield i+1
+            out.append(i+1)
 
-        if strict_start > -1 and i - strict_start == size:
-            # print("    ]", parts, strict_start+size)
+        if strict_start > -1 and i+1 >= strict_start+size:
             break
+
+    return out
 
 
 def count(parts: str, sizes: list[int]) -> int:
-    total = 0
-    path = []
-
+    @functools.cache
     def dfs(parts: str, i_size: int):
         if i_size == len(sizes):
-            nonlocal total
-            total += 1
-            print(f"{total:>5}", ".".join(path))
-            return
+            return 0 if "#" in parts else 1 # ALL # must be used
+
+        total = 0
         size = sizes[i_size]
-        if len(parts) < size:
-            return
+        if len(parts) >= size:
+            for i_end in consume(parts, size):
+                remaining = parts[i_end+1:]  # Consume 1 more for the required separating "."
+                total += dfs(remaining, i_size + 1)
+        return total
 
-        for match_end in consume(parts, size):
-            match_start = match_end-size
-            path.append(parts[:match_start].replace("?", ".") + parts[match_start:match_end])
-            remaining = parts[match_end+1:] # Skip 1 part, matches must be separated by a "."
-            dfs(remaining, i_size + 1)
-            path.pop()
-
-    dfs(parts, 0)
-
-    return total
+    return dfs(parts, 0)
 
 
 def solve_1(data: str):
