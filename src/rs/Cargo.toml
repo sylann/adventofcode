@@ -1,0 +1,18 @@
+[package]
+name = "adventofcode"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+[profile.dev]
+# I prefer to disable incremental debug builds because they take too much disk space and are irrelevant in this project
+incremental = false
+
+[profile.release]
+opt-level = "s"
+
+# TODO: add solutions

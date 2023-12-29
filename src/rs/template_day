@@ -1,0 +1,15 @@
+use std::io::{self, Read};
+
+fn solve_1(data: &String) -> u32 {
+    todo!();
+}
+
+fn solve_2(data: &String) -> u32 {
+    todo!();
+}
+
+fn main() {
+    let mut data = String::new();
+    io::stdin().read_to_string(&mut data).expect("no stdin");
+    println!("{}\n{}", solve_1(&data), solve_2(&data));
+}

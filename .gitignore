@@ -3,6 +3,7 @@
 __pycache__/
 
 src/go/aoc*
+src/rs/target/
 
 /debug/
 inputs/*/*
