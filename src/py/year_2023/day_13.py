@@ -10,54 +10,26 @@ def iter_grids(data: str):
         yield grid, W, H
 
 
-def is_symetric(lines: list[str], size: int, i_mirror: int, allowed_fixes: int):
-    half_size = min(i_mirror, size-i_mirror) # min between left and right
-    if __debug__: eprint(f"CHECK REFLEXION   {i_mirror-1:_>{half_size}}|{i_mirror:_<{half_size}} ({len(lines)} lines)")
-    n_diffs = 0
-    for j, line in enumerate(lines):
-        left, right = line[i_mirror-half_size:i_mirror], line[i_mirror:i_mirror+half_size]
-        if __debug__: eprint(f" {j:>2}  {line[:i_mirror]}|{line[i_mirror:]}   {left}|{right}")
-        for i in range(half_size):
-            i1 = i_mirror - i - 1
-            i2 = i_mirror + i
-            if line[i1] != line[i2]:
-                if n_diffs == allowed_fixes:
-                    return False
-                n_diffs += 1
-    if n_diffs:
-        if __debug__: eprint(f"  DIFFS: {n_diffs}")
-        if n_diffs == 1:
-            return True
-        return False
-
-    return True
-
-
-def find_symetry(lines: list[str], size: int, fix_allowed: bool) -> int | None:
-    for i_mirror in range(1, size):
-        if is_symetric(lines, size, i_mirror, fix_allowed):
-            return i_mirror
+def iter_symetric(mid: int, max1: int, max2):
+    for delta in range(min(mid, max1 - mid)):
+        before = mid - delta - 1
+        after = mid + delta
+        for i in range(max2):
+            yield before, after, i
 
 
 def summarize_notes(data: str, allowed_fixes: int) -> int:
     total = 0
 
     for grid, W, H in iter_grids(data):
-        if __debug__: eprint(f"{W}x{H}", *grid, sep="\n", end="\n\n")
-        sym = find_symetry(grid, W, allowed_fixes)  # vertical reflexion
-        if sym is not None:
-            total += sym
-            if __debug__: eprint(f"RESULT ┃ ", f"{sym-1:>2}|{sym:<2}")
-            continue  # vertical reflexion takes priority (no double reflexion, yet)
-
-        transposed = ["".join(col) for col in zip(*grid)]
-        sym = find_symetry(transposed, H, allowed_fixes)  # horizontal reflexion
-        if sym is not None:
-            total += sym * 100
-            if __debug__: eprint(f"RESULT ━ ", f"{sym-1:>2}|{sym:<2}")
-        else:
-            if __debug__: eprint(f"RESULT NO SYMETRY")
-
+        for m in range(1, W):
+            smudges = sum(1 for L, R, y in iter_symetric(m, W, H) if grid[y][L] != grid[y][R])
+            if smudges == allowed_fixes:
+                total += m
+        for m in range(1, H):
+            smudges = sum(1 for U, D, x in iter_symetric(m, H, W) if grid[U][x] != grid[D][x])
+            if smudges == allowed_fixes:
+                total += m * 100
     return total
 
 
