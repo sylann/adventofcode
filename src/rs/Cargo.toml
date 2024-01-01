@@ -15,4 +15,6 @@ incremental = false
 [profile.release]
 opt-level = "s"
 
-# TODO: add solutions
+[[bin]]
+name = "2023_01"
+path = "year_2023/day_01.rs" 
