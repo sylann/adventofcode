@@ -20,6 +20,9 @@ while [[ $# -gt 0 ]]; do case $1 in
 esac done
 if [ -z "$year" ] || [ -z "$day" ] || [ -z "$lang" ]; then echo "$usage"; exit 1; fi
 
+# Ensure current directory is project's root to allow using the cli from anywhere
+cd "$(dirname "$(dirname "$0")")"
+
 oday="$(printf %02d "$day")"
 
 if [ -z $example ]; then path_in="inputs/year_${year}/day_${oday}.txt"
