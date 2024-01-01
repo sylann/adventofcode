@@ -18,3 +18,7 @@ opt-level = "s"
 [[bin]]
 name = "2023_01"
 path = "year_2023/day_01.rs" 
+
+[[bin]]
+name = "2023_09"
+path = "year_2023/day_09.rs" 
