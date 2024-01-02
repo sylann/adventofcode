@@ -1,0 +1,5 @@
+(executable
+ (name day_09)
+ (public_name day_09)
+ (modules day_09)
+ (libraries utils))
