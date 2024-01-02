@@ -4,7 +4,7 @@ USAGE: $0 YEAR DAY LANG [-d] [-e] [-E NAME]
 
     YEAR       a number between 2010 and 2030  (we'll see if this code survives that long)
     DAY        a number between 1 and 24
-    LANG       one of the supported languages: py, go, rs
+    LANG       one of the supported languages: py, go, rs, ml
     -d         enable debug / disable optimization
     -e         use example instead of user input
     -E NAME    use specific example with given NAME
@@ -12,7 +12,7 @@ USAGE: $0 YEAR DAY LANG [-d] [-e] [-E NAME]
 while [[ $# -gt 0 ]]; do case $1 in
 	20[1-3][0-9])         year="$1";      shift ;;
 	[1-9]|1[0-9]|2[0-4])  day="$1";       shift ;;
-	py|go|rs)             lang="$1";      shift ;;
+	py|go|rs|ml)          lang="$1";      shift ;;
 	-d)                   debug=yes;      shift ;;
 	-e)                   example=yes;    shift ;;
 	-E)                   example=yes;    shift; exid="$1"; shift ;;
@@ -66,5 +66,12 @@ elif [ "$lang" == "rs" ]; then
 		echo cargo run $args --release "<" "$path_in"
 		cargo run $args --release < "$path_in"
 	fi
+
+elif [ "$lang" == "ml" ]; then
+
+	# TODO: add debug mode later...
+
+	echo dune --root src/ml exec year_${year}/day_${oday}.exe "<" "$path_in"
+	dune exec --root src/ml year_${year}/day_${oday}.exe < "$path_in"
 
 fi

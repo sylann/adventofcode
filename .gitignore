@@ -4,6 +4,7 @@ __pycache__/
 
 src/go/aoc*
 src/rs/target/
+src/ml/_build/
 
 /debug/
 inputs/*/*

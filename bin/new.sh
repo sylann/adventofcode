@@ -4,13 +4,13 @@ USAGE: $0 YEAR DAY LANG [--get]
 
     YEAR     a number between 2010 and 2030  (we'll see if this code survives that long)
     DAY      a number between 1 and 24
-    LANG     one of the supported languages: py, go, rs
+    LANG     one of the supported languages: py, go, rs, ml
     --get    download user specific input from adventofcode.com
 "
 while [[ $# -gt 0 ]]; do case $1 in
 	20[1-3][0-9])         year="$1";      shift ;;
 	[1-9]|1[0-9]|2[0-4])  day="$1";       shift ;;
-	py|go|rs)             lang="$1";      shift ;;
+	py|go|rs|ml)          lang="$1";      shift ;;
 	--get)                get=yes;        shift ;;
 	*)                    echo "$usage";  exit 1 ;;
 esac done

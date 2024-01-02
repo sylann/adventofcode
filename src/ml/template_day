@@ -1,0 +1,7 @@
+let solve_1 data = List.length data
+let solve_2 data = List.length data
+
+let () =
+  let data = Utils.read_lines stdin [] in
+  print_endline (string_of_int (solve_1 data));
+  print_endline (string_of_int (solve_2 data));

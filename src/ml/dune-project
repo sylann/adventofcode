@@ -1,0 +1,17 @@
+(lang dune 3.10)
+
+(name adventofcode)
+
+(generate_opam_files true)
+
+(source
+ (github sylann/adventofcode))
+
+(authors "Romain Sylann Vincent")
+
+(package
+ (name adventofcode)
+ (synopsis "Solutions to adventofcode written in Ocaml")
+ (depends ocaml dune))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
