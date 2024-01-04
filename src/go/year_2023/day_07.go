@@ -89,12 +89,12 @@ func (h Hand) Strength(strengths string, useJoker bool) int {
 	// There are 7 different hand type and 13 different cards.
 	// So a base-13 number can represent everything without ambiguity.
 	// Use pre-calculated base 13 powers to avoid using math.Pow and having to deal with casts.
-	out := int(h.Type(strengths, useJoker)) * 4_826_809 // 13^6
-	out += h[0].Value(strengths) * 371_293              // 13^5
-	out += h[1].Value(strengths) * 28_561               // 13^4
-	out += h[2].Value(strengths) * 2_197                // 13^3
-	out += h[3].Value(strengths) * 169                  // 13^2
-	out += h[4].Value(strengths) * 13                   // 13^1
+	out := int(h.Type(strengths, useJoker)) * 371_293 // 13^5
+	out += h[0].Value(strengths) * 28_561             // 13^4
+	out += h[1].Value(strengths) * 2_197              // 13^3
+	out += h[2].Value(strengths) * 169                // 13^2
+	out += h[3].Value(strengths) * 13                 // 13^1
+	out += h[4].Value(strengths) * 1                  // 13^0
 	return out
 }
 
