@@ -3,3 +3,9 @@
  (public_name day_09)
  (modules day_09)
  (libraries utils))
+
+(executable
+ (name day_14)
+ (public_name day_14)
+ (modules day_14)
+ (libraries utils))
