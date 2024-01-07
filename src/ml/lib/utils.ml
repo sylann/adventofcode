@@ -33,3 +33,8 @@ module Grid = struct
   let to_string (g : t) : string = g |> to_string_list |> String.concat "\n"
   let print (g : t) : unit = print_endline (to_string g)
 end
+
+let memoized tbl (f : 'a -> 'b) (key : 'a) =
+  match Hashtbl.find_opt tbl key with
+  | Some out -> out
+  | None -> let out = f key in Hashtbl.add tbl key out; out
