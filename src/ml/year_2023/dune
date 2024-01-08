@@ -15,3 +15,9 @@
  (public_name day_15)
  (modules day_15)
  (libraries utils))
+
+(executable
+ (name day_16)
+ (public_name day_16)
+ (modules day_16)
+ (libraries utils))

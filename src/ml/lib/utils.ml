@@ -1,5 +1,7 @@
 open Printf
 
+let ( => ) a b = Seq.init (b - a) (fun i -> i)
+
 let rec read_lines ic list =
   match input_line ic with
   | line -> read_lines ic (line :: list)
@@ -15,6 +17,12 @@ let print_list_list ?(prefix="") fmt (list:'a list list) =
   list |> List.iter @@ List.iter @@ printf fmt;
   print_newline ()
 
+module Array = struct
+  include Array
+  let sum f arr = Array.fold_left (fun acc x -> acc + f x) 0 arr
+  let count f arr = arr |> Array.to_seq |> Seq.filter f |> Seq.length
+end
+  
 module Row = struct
   type t = char array
 
