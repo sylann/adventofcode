@@ -53,8 +53,8 @@ func parseArgs() (year, day int) {
 	}
 
 	day, _ = strconv.Atoi(os.Args[2])
-	if day < 1 || day > 24 {
-		fmt.Printf("Invalid args: DAY must be a number between 1 and 24 included\n")
+	if day < 1 || day > 25 {
+		fmt.Printf("Invalid args: DAY must be a number between 1 and 25 included\n")
 		os.Exit(1)
 	}
 
