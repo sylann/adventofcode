@@ -5,7 +5,6 @@ module Hash = struct
   type k = string
 
   let mem : (k, t) Hashtbl.t = Hashtbl.create 50
-
   let of_char (prev : t) (c : char) : t = (prev + Char.code c) * 17 mod 256
   let of_string (s : k) : t = String.to_bytes s |> Bytes.fold_left of_char 0
   let of_string_mem (s : k) : t = Utils.memoized mem of_string s
@@ -26,13 +25,21 @@ module Op = struct
     match split '-' s with
     | label :: [ "" ] -> Remove label
     | _ -> raise (Invalid_argument "Op.parse_remove expects format '<label>-'")
+  ;;
+
   let parse_assign s =
     match split '=' s with
-    | label :: [ num ] -> Assign { label = label; focal = int_of_string num }
+    | label :: [ num ] -> Assign { label; focal = int_of_string num }
     | _ -> raise (Invalid_argument "Op.parse_assign expects format '<label>=<num>'")
+  ;;
 
   let parse s = s |> if String.ends_with ~suffix:"-" s then parse_remove else parse_assign
-  let label_of (op : t) : string = match op with Remove label -> label | Assign lens -> lens.label
+
+  let label_of (op : t) : string =
+    match op with
+    | Remove label -> label
+    | Assign lens -> lens.label
+  ;;
 end
 
 module Box = struct
@@ -46,11 +53,17 @@ module Box = struct
     | Remove label -> box |> List.filter (fun (le : Lens.t) -> le.label <> label)
     | Assign new_lens ->
         let found = ref false in
-        let updated = box |> List.map (fun lens ->
-            if Lens.same_label lens new_lens then (found := true; new_lens)
-            else lens)
+        let updated =
+          box
+          |> List.map (fun lens ->
+                 if not (Lens.same_label lens new_lens) then lens
+                 else begin
+                   found := true;
+                   new_lens
+                 end)
         in
         if not !found then updated @ [ new_lens ] else updated
+  ;;
 end
 
 let boxes = Array.make 256 []
@@ -58,6 +71,7 @@ let boxes = Array.make 256 []
 let _debug_boxes ins box_i : unit =
   Printf.printf "\nAfter \"%s\":  (Target Box:%d)\n" ins box_i;
   boxes |> Array.iteri (fun i box -> if List.length box > 0 then Box._print i box)
+;;
 
 let evaluate_ins (ins : string) : unit =
   let op = Op.parse ins in
@@ -65,11 +79,13 @@ let evaluate_ins (ins : string) : unit =
   boxes.(box_i) <- Box.update op boxes.(box_i);
   (* _debug_boxes ins box_i; *)
   ()
+;;
 
 let focus_power () : int =
   let sum f list = List.mapi f list |> List.fold_left ( + ) 0 in
   let box_power i box = box |> sum (Lens.power i) in
   boxes |> Array.to_list |> sum box_power
+;;
 
 let solve_1 data = data |> split ',' |> List.map Hash.of_string_mem |> List.fold_left ( + ) 0
 let solve_2 data = data |> split ',' |> List.iter evaluate_ins |> focus_power
@@ -78,3 +94,4 @@ let () =
   let data = input_line stdin in
   print_endline (string_of_int (solve_1 data));
   print_endline (string_of_int (solve_2 data))
+;;
