@@ -101,8 +101,8 @@ let find_best_start (g : Grid.t) : beams_grid =
   let max_len = ref 0 in
   let m_bg = ref (Array.make_matrix 0 0 []) in
 
-  let update_max pos dir =
-    let bg = simulate_beams g ~dir0:dir ~pos0:pos in
+  let update_max dir0 pos0  =
+    let bg = simulate_beams g ~dir0 ~pos0 in
     let len = count_energized bg in
     if len > !max_len then begin
       max_len := len;
@@ -110,10 +110,10 @@ let find_best_start (g : Grid.t) : beams_grid =
     end
   in
 
-  0 => w - 1 |> Seq.iter (fun x -> update_max { x; y = 0 } Down);
-  0 => w - 1 |> Seq.iter (fun x -> update_max { x; y = h - 1 } Up);
-  0 => h - 1 |> Seq.iter (fun y -> update_max { x = 0; y } Right);
-  0 => h - 1 |> Seq.iter (fun y -> update_max { x = w - 1; y } Left);
+  0 => w - 1 |> Seq.iter (fun x -> update_max Down { x; y = 0 });
+  0 => w - 1 |> Seq.iter (fun x -> update_max Up { x; y = h - 1 });
+  0 => h - 1 |> Seq.iter (fun y -> update_max Right { x = 0; y });
+  0 => h - 1 |> Seq.iter (fun y -> update_max Left { x = w - 1; y });
   !m_bg
 
 let solve_1 data = data |> simulate_beams ~dir0:Right ~pos0:{ x = 0; y = 0 } |> count_energized

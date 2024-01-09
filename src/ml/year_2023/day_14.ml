@@ -23,7 +23,7 @@ let tilt (dir : direction) (grid : Grid.t) : Grid.t =
   let _cell ?(dy = 0) ?(dx = 0) y x =
     match grid.(y).(x) with
     | 'O' -> _rock y x
-    | '#' -> _wall ~dy:dy ~dx:dx y x
+    | '#' -> _wall ~dy ~dx y x
     | _ -> ()
   in
   let iter size op start f = Seq.init size (op start) |> Seq.iter f in
