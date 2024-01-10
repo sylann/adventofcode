@@ -1,19 +1,7 @@
 open Utils
 
-type vec2 = { x : int; y : int }
-
 module Dir = struct
-  type t = Up | Down | Left | Right
-
-  let to_string (d : t) : string =
-    match d with
-    | Up -> "^"
-    | Down -> "v"
-    | Left -> "<"
-    | Right -> ">"
-  ;;
-
-  let _print (d : t) : unit = Printf.printf "%s" (to_string d)
+  include Dir
 
   let next (d : t) (c : char) : t list =
     match (d, c) with
@@ -37,14 +25,6 @@ module Dir = struct
     | _ -> raise (Invalid_argument "Unexpected case in Dir.next")
   ;;
 end
-
-let get_next_pos (d : Dir.t) (pos : vec2) : vec2 =
-  match d with
-  | Up -> { x = pos.x; y = pos.y - 1 }
-  | Down -> { x = pos.x; y = pos.y + 1 }
-  | Left -> { x = pos.x - 1; y = pos.y }
-  | Right -> { x = pos.x + 1; y = pos.y }
-;;
 
 type beams = Dir.t list
 type beams_grid = beams array array
@@ -75,14 +55,14 @@ let _show_energy g bg =
   Printf.printf "%!"
 ;;
 
-let simulate_beams (g : Grid.t) ~(dir0 : Dir.t) ~(pos0 : vec2) : beams_grid =
+let simulate_beams (g : Grid.t) ~(dir0 : Dir.t) ~(pos0 : Vec2.t) : beams_grid =
   let w, h = Grid.size g in
   let bg : beams_grid = Array.make_matrix w h [] in
 
-  let out_of_bound { x; y } = x < 0 || x > w - 1 || y < 0 || y > h - 1 in
+  let out_of_bound ({ x; y }: Vec2.t) = x < 0 || x > w-1 || y < 0 || y > h-1 in
   let seen = Hashtbl.create 200 in
 
-  let rec walk_beam (dir : Dir.t) (pos : vec2) : unit =
+  let rec walk_beam (dir : Dir.t) (pos : Vec2.t) : unit =
     if out_of_bound pos then ()
     else
       match Hashtbl.find_opt seen (dir, pos) with
@@ -91,7 +71,7 @@ let simulate_beams (g : Grid.t) ~(dir0 : Dir.t) ~(pos0 : vec2) : beams_grid =
           Hashtbl.add seen (dir, pos) ();
           let cell = g.(pos.y).(pos.x) in
           bg.(pos.y).(pos.x) <- dir :: bg.(pos.y).(pos.x);
-          Dir.next dir cell |> List.iter (fun nd -> walk_beam nd (get_next_pos nd pos))
+          Dir.next dir cell |> List.iter (fun nd -> walk_beam nd (Vec2.next nd pos))
         end
   in
 
