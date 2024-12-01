@@ -8,6 +8,7 @@ import (
 
 	"github.com/sylann/adventofcode/year_2022"
 	"github.com/sylann/adventofcode/year_2023"
+	"github.com/sylann/adventofcode/year_2024"
 )
 
 func main() {
@@ -30,6 +31,8 @@ func getSolution(year, day int) Solution {
 		sol = year_2022.Solutions[day]
 	case 2023:
 		sol = year_2023.Solutions[day]
+	case 2024:
+		sol = year_2024.Solutions[day]
 	}
 
 	if sol == nil {
