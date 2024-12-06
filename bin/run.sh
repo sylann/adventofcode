@@ -34,6 +34,8 @@ fi
 # ┃                      EXECUTE SOLUTION                       ┃
 # ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
+echo > debug.log
+
 if [ "$lang" == "py" ]; then
 
 	py_module="py.year_${year}.day_${oday}"
@@ -74,4 +76,15 @@ elif [ "$lang" == "ml" ]; then
 	echo dune --root src/ml exec year_${year}/day_${oday}.exe "<" "$path_in"
 	dune exec --root src/ml year_${year}/day_${oday}.exe < "$path_in"
 
+fi
+
+max_err_lines=20
+if [ -n "$(<debug.log)" ]; then
+	echo -e "\033[1;31m"
+	if [ "$(wc -l < debug.log)" -le "$max_err_lines" ]; then
+		cat debug.log
+	else
+		echo "Stderr output is more than $max_err_lines lines long. See ./debug.log."
+	fi
+	echo -e "\033[0m"
 fi
