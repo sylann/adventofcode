@@ -31,16 +31,12 @@ path_in_example="inputs/year_${year}/day_${oday}_example.txt"
 
 if ! [ -d "$path_in_year" ]; then mkdir -p "$path_in_year"; fi
 if ! [ -f "$path_in_example" ]; then touch "$path_in_example"; fi
-if ! [ -f "$path_in_user" ]; then
-	if [ -n "$get" ]; then
-		url="https://adventofcode.com/$year/day/$day/input"
-		cookie=$(< .cookie)
+if ! [ -f "$path_in_user" ] || [ -n "$get" ]; then
+	url="https://adventofcode.com/$year/day/$day/input"
+	cookie=$(< .cookie)
 
-		echo "[INFO] Retrieving input from $url"
-		curl "$url" -H "Cookie: $cookie" -o "$path_in_user" --progress-bar
-	else
-		touch "$path_in_user"
-	fi
+	echo "[INFO] Retrieving input from $url"
+	curl "$url" -H "Cookie: $cookie" -o "$path_in_user" --progress-bar
 fi
 
 # ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
