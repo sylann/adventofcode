@@ -1,22 +1,32 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"os"
 	"strconv"
 
+	"github.com/sylann/adventofcode/utils"
 	"github.com/sylann/adventofcode/year_2022"
 	"github.com/sylann/adventofcode/year_2023"
 	"github.com/sylann/adventofcode/year_2024"
 )
 
 func main() {
+	prof := utils.NewProfiler()
 	year, day := parseArgs()
 	sol := getSolution(year, day)
 	data := readDataFromStdin()
-	fmt.Printf("\n[PART 1]\n%s\n", sol.Solve1(data))
-	fmt.Printf("\n[PART 2]\n%s\n", sol.Solve2(data))
+	var r1, r2 string
+	func() {
+		prof.StartCpuProfile()
+		defer prof.StopCpuProfile()
+		r1 = sol.Solve1(data)
+		r2 = sol.Solve2(data)
+		prof.MemProfile()
+	}()
+	fmt.Printf("\n[PART 1]\n%s\n\n[PART 2]\n%s\n\n", r1, r2)
 }
 
 type Solution interface {
@@ -44,18 +54,21 @@ func getSolution(year, day int) Solution {
 }
 
 func parseArgs() (year, day int) {
-	if len(os.Args) < 3 {
+	flag.Parse()
+	args := flag.Args()
+
+	if len(args) < 2 {
 		fmt.Printf("Usage: %s YEAR DAY\n", os.Args[0])
 		os.Exit(1)
 	}
 
-	year, _ = strconv.Atoi(os.Args[1])
+	year, _ = strconv.Atoi(args[0])
 	if year == 0 {
 		fmt.Printf("Invalid args: YEAR must be a number\n")
 		os.Exit(1)
 	}
 
-	day, _ = strconv.Atoi(os.Args[2])
+	day, _ = strconv.Atoi(args[1])
 	if day < 1 || day > 25 {
 		fmt.Printf("Invalid args: DAY must be a number between 1 and 25 included\n")
 		os.Exit(1)
