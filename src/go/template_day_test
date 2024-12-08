@@ -6,16 +6,50 @@ import (
 	"github.com/sylann/adventofcode/utils"
 )
 
+var day__day__ = Day__day__{}
+
+func TestDay__day___Solve1_example(t *testing.T) {
+	data, want := utils.GetData(t, __year__, __day__, 1, "_example")
+	if got := day__day__.Solve1(data); got != want {
+		t.Fatalf(`day__day__.Solve1() = %s; want %s`, got, want)
+	}
+}
+
+func TestDay__day___Solve1(t *testing.T) {
+	data, want := utils.GetData(t, __year__, __day__, 1, "")
+	if got := day__day__.Solve1(data); got != want {
+		t.Fatalf(`day__day__.Solve1() = %s; want %s`, got, want)
+	}
+}
+
+func TestDay__day___Solve2_example(t *testing.T) {
+	data, want := utils.GetData(t, __year__, __day__, 2, "_example")
+	if got := day__day__.Solve2(data); got != want {
+		t.Fatalf(`day__day__.Solve2() = %s; want %s`, got, want)
+	}
+}
+
+func TestDay__day___Solve2(t *testing.T) {
+	data, want := utils.GetData(t, __year__, __day__, 2, "")
+	if got := day__day__.Solve2(data); got != want {
+		t.Fatalf(`day__day__.Solve2() = %s; want %s`, got, want)
+	}
+}
+
 func BenchmarkDay__day___Solve1(b *testing.B) {
-	day, data := Day__day__{}, utils.ReadInputData(b, "year___year__/day___day__.txt")
+	data, want := utils.GetData(b, __year__, __day__, 1, "")
 	for i := 0; i < b.N; i++ {
-		day.Solve1(data)
+		if day__day__.Solve1(data) != want {
+			b.Fatal("day__day__.Solve1() is invalid")
+		}
 	}
 }
 
 func BenchmarkDay__day___Solve2(b *testing.B) {
-	day, data := Day__day__{}, utils.ReadInputData(b, "year___year__/day___day__.txt")
+	data, want := utils.GetData(b, __year__, __day__, 2, "")
 	for i := 0; i < b.N; i++ {
-		day.Solve2(data)
+		if day__day__.Solve2(data) != want {
+			b.Fatal("day__day__.Solve2() is invalid")
+		}
 	}
 }

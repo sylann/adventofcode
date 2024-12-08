@@ -6,34 +6,50 @@ import (
 	"github.com/sylann/adventofcode/utils"
 )
 
+var day04 = Day04{}
+
 func TestDay04_Solve1_example(t *testing.T) {
-	day, data := Day04{}, utils.ReadInputData(t, "year_2024/day_04_example.txt")
-	expected := "18"
-	actual := day.Solve1(data)
-	if actual != expected {
-		t.Fatalf(`Day04.Solve1() = %s, %s, want "", error`, actual, expected)
+	data, want := utils.GetData(t, 2024, 04, 1, "_example")
+	if got := day04.Solve1(data); got != want {
+		t.Fatalf(`day04.Solve1() = %s; want %s`, got, want)
+	}
+}
+
+func TestDay04_Solve1(t *testing.T) {
+	data, want := utils.GetData(t, 2024, 04, 1, "")
+	if got := day04.Solve1(data); got != want {
+		t.Fatalf(`day04.Solve1() = %s; want %s`, got, want)
 	}
 }
 
 func TestDay04_Solve2_example(t *testing.T) {
-	day, data := Day04{}, utils.ReadInputData(t, "year_2024/day_04_example.txt")
-	expected := "9"
-	actual := day.Solve2(data)
-	if actual != expected {
-		t.Fatalf(`Day04.Solve2() = %s, %s, want "", error`, actual, expected)
+	data, want := utils.GetData(t, 2024, 04, 2, "_example")
+	if got := day04.Solve2(data); got != want {
+		t.Fatalf(`day04.Solve2() = %s; want %s`, got, want)
+	}
+}
+
+func TestDay04_Solve2(t *testing.T) {
+	data, want := utils.GetData(t, 2024, 04, 2, "")
+	if got := day04.Solve2(data); got != want {
+		t.Fatalf(`day04.Solve2() = %s; want %s`, got, want)
 	}
 }
 
 func BenchmarkDay04_Solve1(b *testing.B) {
-	day, data := Day04{}, utils.ReadInputData(b, "year_2024/day_04.txt")
+	data, want := utils.GetData(b, 2024, 04, 1, "")
 	for i := 0; i < b.N; i++ {
-		day.Solve1(data)
+		if day04.Solve1(data) != want {
+			b.Fatal("day04.Solve1() is invalid")
+		}
 	}
 }
 
 func BenchmarkDay04_Solve2(b *testing.B) {
-	day, data := Day04{}, utils.ReadInputData(b, "year_2024/day_04.txt")
+	data, want := utils.GetData(b, 2024, 04, 2, "")
 	for i := 0; i < b.N; i++ {
-		day.Solve2(data)
+		if day04.Solve2(data) != want {
+			b.Fatal("day04.Solve2() is invalid")
+		}
 	}
 }
