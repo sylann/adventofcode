@@ -8,6 +8,7 @@ src/ml/_build/
 
 /debug/
 inputs/*/*
+outputs/*/*
 !inputs/*/*example*
 /.cookie
 *.log
