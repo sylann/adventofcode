@@ -18,15 +18,11 @@ func main() {
 	year, day := parseArgs()
 	sol := getSolution(year, day)
 	data := readDataFromStdin()
-	var r1, r2 string
-	func() {
-		prof.StartCpuProfile()
-		defer prof.StopCpuProfile()
-		r1 = sol.Solve1(data)
-		r2 = sol.Solve2(data)
-		prof.MemProfile()
-	}()
-	fmt.Printf("\n[PART 1]\n%s\n\n[PART 2]\n%s\n\n", r1, r2)
+	prof.StartCpuProfile()
+	defer prof.StopCpuProfile()
+	fmt.Printf("\n[PART 1]\n%s\n", sol.Solve1(data))
+	fmt.Printf("\n[PART 2]\n%s\n\n", sol.Solve2(data))
+	prof.MemProfile()
 }
 
 type Solution interface {
