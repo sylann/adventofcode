@@ -135,9 +135,7 @@ func (Day06) Solve1(data string) string {
 	return strconv.Itoa(len(trail.path))
 }
 
-func TryObstacleAhead(g grid, st trail, pos vec2, dir direction) bool {
-	obs := pos.Move(dir)
-	dir = dir.NextDir()
+func TryObstacleAhead(g grid, st trail, obs, pos vec2, dir direction) bool {
 	t := NewTrail(pos, dir)
 	showLoopPath := false
 	if showLoopPath {
@@ -186,7 +184,7 @@ func (Day06) Solve2(data string) string {
 			dir = dir.NextDir()
 			trail.MarkDir(pos, dir)
 		} else {
-			if npos != start && TryObstacleAhead(grid, trail, pos, dir) {
+			if npos != start && TryObstacleAhead(grid, trail, npos, start, Up) {
 				obstacles[npos] = true
 			}
 			pos = npos
